@@ -1,0 +1,158 @@
+2.0.20:
+	* Require glib 2.4, and change use of the _take_ownership functions
+	  to _take_ functions
+	* Support for GTK3 (Pedro L. Lucas)
+	* names on properties and signals (Pedro L. Lucas)
+
+2.0.19:
+	* Print unreftors and destructors before calling parent finalize and
+	  dispose as is the proper ordering (thanks to Dmitri Toubelis)
+	* do not output #line 0 statements (patch from Nick Bowler)
+	* Fix empty file separator (thanks to H.-J. Schnitzer)
+
+2.0.18:
+	* Add %ctop{ %} to do what alltop does but only for the C file
+	* Buildfixes for Cygwin (Roland Clobus)
+	* gob2.m4 exits if gob is not found (fixes ubuntu #317801)
+          (Stephen Kitt)
+	* Escape minus signs in the webpage and fix some typos (Stephen Kitt)
+	* clarify README as to the public domainness of the generated code
+
+2.0.17:
+	* Fix segfault when defining the finilize, dispose, and
+	  constructor methods (Fixes debian bug #574542)
+	* Handle carriage returns in input files
+	* use -G_MAXFLOAT and -G_MAXDOUBLE for the default minima
+	  for floating point numbers (thanks to Marcel Wagner for
+	  the patch)
+
+2.0.16:
+	* add possibility of using function attributes such as
+	  G_GNUC_PRINTF etc... (Britton Kerin, Jean-Yves Lefort, me)
+	* *_get_type methods are G_GNUC_CONST (Jean-Yves Lefort, me)
+	* move #line sections past opening brace of functions
+	  (Jean-Yves Lefort)
+	* handle finalize, dispose, constructor just like init
+	  (Jean-Yves Lefort)
+	* Add %afterdecls{ %} code block
+	  (Jean-Yves Lefort)
+	* Minor fixes to docs (me, Andrew Feren)
+
+2.0.15:
+	* Fix --file-sep usage with respect to private headers
+	* Don't use /dev/null to help portability on non-unix
+	* Fix segfault on bad include statement (debian bug #443907)
+	* Fix my-person.gob example
+
+2.0.14:
+	* Fix major segfault
+
+2.0.13:
+	* --no-touch support to avoid spurious rebuilds (see manpage)
+          (Jean-Yves Lefort)
+	* abstract class flag support (Jean-Yves Lefort)
+	* allow BOXED in signal arguments (see manpage) (Big Thor)
+	* fix libglade support (Nicolas Bruguier)
+
+2.0.12:
+	* libglade support (see manpage) (Nicolas Brugier)
+	* Fixes to property parsing and allow user created
+	  parameters (Jean-Yves Lefort)
+	* Add support for prealloc and allow bitfields (K. Haley)
+	* Don't reference TYPE_SELF when generating privates (Big Thor)
+
+2.0.11:
+	* When privates and overrides were used in 2.0.10 compilation of
+	  object may have broken on some compilers.
+
+2.0.10:
+	* Support for overriding properties (Jean-Yves Lefort)
+	* Some M4 fixage with respect to NOINSTGOB (K. Haley)
+	* Make the private structure allocation play nice with glib (K. Haley)
+	* Add --file-sep=c option to allow changing the file separator
+	  character (Pierre Gay) 
+	* Fix C++ compilation of linked POINTER types by casting properly
+	  (Frank Lichtenheld) debian bug #270546
+	* Always add string.h as it was missing sometimes when memset was used
+	* In C++ mode cast the destroywith/unrefwith function with
+	  reinterpret_cast to avoid C++ nonsense (should fix compilation with
+	  gcc 3.4 I think)
+	* Update the docs
+
+2.0.9:
+	* Lots of fixes for gcc warnings, objects should now compile with
+	  very pedantic warnings set.
+
+2.0.8:
+	* Documentation fixes
+	* Add support for -o and --output-dir
+	* Fixed boxed_type
+
+2.0.7:
+	* Add support for INT64 and UINT64 types for signals and properties
+	  (Nicolas Brugier)
+	* Exit with error when BOXED or FLAGS are used as arguments for a
+	  signal, that doesn't work anyway
+	* Warn classwide members have destructors since those never get called
+	  (we only make static classes so it doesn't make sense anyway)
+	* Fix --exit-on-warn
+	* Don't use deprecated glib functions (Kjartan, me)
+	* Fix compilation on IBMs C compiler (Albert Chin-A-Young)
+	* gob2.m4 fixes for new automake (Tomasz Kloczko)
+	* Couple of minor fixes
+	* Couple of fixes to the documentation
+
+2.0.6:
+	* Allow compilation with newer flex (tested with both 2.5.4a and
+	  2.5.31)
+	* Minor doc update
+	* Minor build fixes
+
+2.0.5:
+	* Fix leak in signal emission
+
+2.0.4:
+	* Fix two gtkdoc bugs
+	* Use G_UNLIKELY/G_LIKELY a bit if available
+
+2.0.3:
+	* In C++ mode don't eat "::" from type strings as C++ might be
+	  using it, and we aren't ever using such a thing
+	* Fix a segfaults in the parser (Jody Goldberg, Gerhard Dieringer, me)
+	* Fix unichar stuff for values (properties, signal arguments, etc...)
+	* Add support for UNICHAR and UINT64 and INT64 everywhere
+	* Don't make the get_type function a G_GNUC_CONST as gcc3.2 whacks
+	  out about that
+
+2.0.2:
+	* Properly link BOXED type
+	* unref/unrefwith works now since shtdown changed into dispose
+	* Update documentation
+	* man page escapes all ' chars (fix debian bug 155577)
+	* Further tests in test.gob
+
+2.0.1:
+	* Fixed property types for all the types that require an extra
+	  GObject type
+	* Fix object and boxed linking
+	* Fixed C++ mode for flags and enum linking
+	* Allow comments in property code
+
+2.0.0:
+	* Update examples and documentation
+
+1.99.3:
+	* Fix signal default value
+	* Special case the interface code to allow implementing
+	  GTypePlugin and GtkEditable interfaces
+	* Fix export of accessors (Dennis Bjorklund)
+	* some compilation fixes
+
+1.99.2:
+	* allow implementation (but not definition yet) of interfaces
+	* enum, flags and GError creation code
+	* BonoboObject stuff (Seth)
+	* build fixes (me, Seth)
+	* m4 preprocessing stuff (Josh Parsons)
+	* Code generation fixes (Josh Parsons, Bastien Nocera, me)
+	* New way of doing typesafe signal connections

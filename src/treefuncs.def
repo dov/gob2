@@ -1,0 +1,182 @@
+# Run ./generate_treefuncs.pl after modifying this to regenerate
+# treefuncs.[ch]
+
+# These are the parse tree definitions, eliminates typos
+
+HEADER
+/* for ccode type */
+enum {
+	A_CCODE,
+	AT_CCODE,
+	C_CCODE,
+	AD_CCODE,
+	H_CCODE,
+	HT_CCODE,
+	PH_CCODE,
+	CT_CCODE
+};
+
+/* check type */
+enum {
+	NULL_CHECK,
+	TYPE_CHECK,
+	LT_CHECK,
+	GT_CHECK,
+	LE_CHECK,
+	GE_CHECK,
+	EQ_CHECK,
+	NE_CHECK
+};
+
+/* scope type */
+enum {
+	NO_SCOPE,
+	PUBLIC_SCOPE,
+	PRIVATE_SCOPE,
+	PROTECTED_SCOPE,
+	CLASS_SCOPE
+};
+
+/* method type */
+enum {
+	REGULAR_METHOD,
+	INIT_METHOD,
+	CLASS_INIT_METHOD,
+	CONSTRUCTOR_METHOD,
+	DISPOSE_METHOD,
+	FINALIZE_METHOD,
+	VIRTUAL_METHOD,
+	SIGNAL_LAST_METHOD,
+	SIGNAL_FIRST_METHOD,
+	OVERRIDE_METHOD
+};
+
+ENDHEADER
+
+CLASS Class
+  STRING	otype   # this object class type
+  STRING	ptype   # parent class type
+  STRING	bonobo_object_class # Class for BonoboObject
+  BOOL		glade_xml # Glade XML Class
+  STRING	chunk_size # if the object should be allocated with mem_chunks
+  STRINGLIST	interfaces # GObject interfaces this class exports
+  NODELIST	nodes
+  BOOL		abstract # if G_TYPE_FLAG_ABSTRACT should be used
+ENDCLASS
+
+CLASS Type
+  STRING	name	# the specifier part
+  STRING	pointer	# the pointer part
+  STRING	postfix
+ENDCLASS
+
+CLASS CCode
+  INT		cctype
+  STRING	cbuf
+  INT		line_no
+ENDCLASS
+
+CLASS Check
+  INT		chtype
+  STRING	number
+ENDCLASS
+
+CLASS FuncArg
+  TYPE		atype
+  STRING	name
+  NODELIST	checks
+ENDCLASS
+
+CLASS Argument
+  STRING	gtktype
+  TYPE		atype
+  STRINGLIST	flags
+  STRING	name
+  STRING	get
+  INT		get_line
+  STRING	set
+  INT		set_line
+  INT		line_no
+ENDCLASS
+
+CLASS Property
+  STRING	gtktype
+  TYPE		ptype
+  STRINGLIST	flags
+  STRING	name
+  STRING	canonical_name
+  STRING	nick
+  STRING	blurb
+  STRING	minimum
+  STRING	maximum
+  STRING	default_value
+  STRING	extra_gtktype
+  BOOL		override
+  BOOL		link
+  BOOL		export
+  STRING	get
+  INT		get_line
+  STRING	set
+  INT		set_line
+  INT		line_no
+ENDCLASS
+
+CLASS Method
+  INT		scope		# scope type
+  INT		method		# method type
+  TYPE		mtype
+  STRING	otype		# for override methods
+  STRINGLIST	gtktypes	# GObject types for a signal
+  STRINGLIST	flags		# G_SIGNAL_* flags for a signal
+  STRING	signal_name	# Name of signal
+  STRING	id
+  NODELIST	args
+  STRING        funcattrs       # GLib function attribute macros
+  STRING	onerror
+  STRING	defreturn
+  STRING	cbuf
+  INT		line_no
+  INT		ccode_line
+  BOOL		vararg
+  INT		unique_id	# A unique id for new methods
+  BOOL		bonobo_object_func	# Function for BonoboObject
+  STRING	interface	# interface this belongs to
+ENDCLASS
+
+CLASS Variable
+  INT		scope
+  TYPE		vtype
+  BOOL		glade_widget
+  STRING	id
+  INT		line_no
+  BOOL		destructor_unref
+  STRING	destructor
+  INT		destructor_line
+  BOOL		destructor_simple
+  STRING	initializer
+  INT		initializer_line
+  BOOL		initializer_simple
+ENDCLASS
+
+CLASS EnumDef
+  STRING	etype
+  STRING	prefix
+  NODELIST	values
+ENDCLASS
+
+CLASS EnumValue
+  STRING	name
+  STRING	value
+ENDCLASS
+
+CLASS Flags
+  STRING	ftype
+  STRING	prefix
+  STRINGLIST	values
+ENDCLASS
+
+CLASS Error
+  STRING	etype
+  STRING	prefix
+  STRINGLIST	values
+ENDCLASS

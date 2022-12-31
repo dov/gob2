@@ -1,0 +1,6 @@
+.defs file generation
+
+Allow math expressions in array definition
+
+test out the possibility of doing the static typesafe downcasts, at least
+for gob objects.

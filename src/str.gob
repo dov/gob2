@@ -1,0 +1,73 @@
+// A simple string class, a lot like GString but with full GObject
+// machinery and really short method names for the lazy :)
+
+%{
+#include <stdio.h>
+%}
+
+class :Str from G:Object {
+ 
+  private GString *contents;
+
+  public
+  void
+  print (self)
+  {
+    g_print ("%s", self->_priv->contents->str);
+  }
+
+   public
+   GObject *
+   new (const char *format (check null), ...) attr {G_GNUC_PRINTF (1, 2)}
+     onerror NULL defreturn NULL
+   {
+     va_list ap;
+     va_start (ap, format);
+     gchar *tmp = g_strdup_vprintf (format, ap);
+     va_end (ap);
+     
+     Self *self = (Self *) GET_NEW;
+     
+     self->_priv->contents = g_string_new (tmp);
+     
+     g_free (tmp);
+     
+     return G_OBJECT (self);
+   }
+
+   // It seems gob accepts defreturn on non-virtual non-signal types
+   // without complaint, though from the man page I'm not sure the
+   // resulting behavior is well defined.
+   public
+   char *
+   nonvirt_test (self, const char *format (check null), ...)
+     attr {G_GNUC_PRINTF (2,3)}
+     defreturn NULL
+   {
+     return NULL;
+   }
+
+   private
+   char *
+   private_test_method (self, const char *format (check null), ...)   
+     attr {G_GNUC_PRINTF (2, 3)}
+     defreturn NULL
+   {
+     return NULL;
+   }
+
+   public
+   char *
+   private_method_caller (self)
+   {
+     int much_too_general = 42;
+
+     // This should trigger a warning.
+     self_private_test_method (self, "want a string: %s", much_too_general);
+
+     // So should this.
+     str_private_test_method (self, "want a string: %s", much_too_general);
+
+     return NULL;
+   }
+}

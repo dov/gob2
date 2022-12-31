@@ -1,0 +1,24 @@
+These are some example .gob files
+
+gtk-button-count.gob	An example showing how simple it is to derive
+			objects and override methods, this one implements
+			a "click counting" on a GtkButton.  It defines
+			a property for getting and setting the count
+			and it overrides the "clicked" default handler
+			to count clicks.  It also has inline documentation
+			in gtk-doc style which gob can translate
+			and stuff into the source file for you.
+
+my-person.gob		A simple file which can store some identity
+			information about a person, it shows properties,
+			signals and others.
+
+GNOME_Foo_SomeInterface.idl
+foo-some-interface.gob	Example idl and gob file for a BonoboClass
+			implementation.  It can be this easy to write
+			Bonobo classes.
+
+my-glade.gob
+my-glade.glade
+my-glade-main.c		Example gob and glade file (plus a driver program)
+			to use the libglade integration

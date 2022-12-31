@@ -1,0 +1,18 @@
+# This is a test makefile for the str_test to check string attributes stuff
+#
+
+CFLAGS := -Wall $(shell pkg-config --cflags gobject-2.0 glib-2.0)
+LDFLAGS := $(shell pkg-config --libs-only-other --libs-only-L \
+                              gobject-2.0 glib-2.0)
+LDLIBS := $(shell pkg-config --libs-only-l gobject-2.0 glib-2.0)
+
+default: str.o str_test.o Makefile.str
+	gcc $(LDFLAGS) str.o str_test.o $(LDLIBS) -o str_test
+
+%.c %.h: %.gob
+	./gob2 $<
+
+str.o str_test.o: Makefile.str
+
+clean:
+	rm -rf str.o str_test.o str.c str.h str-private.h str_test

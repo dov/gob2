@@ -1,0 +1,68 @@
+GObject Builder (GOB-2)
+(George's Obfuscated Bits)
+
+Very simple preprocessor for making GObject objects with inline C code so that
+generated files are not editted.  Syntax is inspired by java and yacc or lex.
+The implementation is intentionaly kept simple, and no C code parsing is done.
+
+Reasons:
+	- C is a perfect (well mostly) language, no need for another language
+	- Writing a fully featured GObject object is a hassle
+	- Need for a generator that doesn't require changes to generated code
+	- I like how Java writes method code directly into the class
+	  definition.
+	- Perhaps there is less of a need for GOB now that Vala is around.
+	  Still, GOB is simpler and more 'lightweight' if that matters.
+	  IMO, Vala is a nicer long term solution.  But that doesn't mean
+	  that GOB needs to (nor will) go away.
+
+To build:
+	(the usual drill :)
+	run "./configure;make"
+
+To install:
+	run "make install" as root, or just take the gob2 binary and place
+	it anywhere you want.
+
+To use:
+	run gob2 with the .gob file on the command line
+
+What's generated:
+	two (.c and .h) files named by the object name with words
+	separated by a hyphen (not neccessairly the .gob file prefix)
+
+How to write .gob files?
+	1) read "man gob2" for some documenation on how to use GOB
+	2) if you can't find what you need, read src/test.gob for an
+	   example of GOB code
+	3) If you still can't find what you need, read src/lexer.l
+	   and src/parse.y (in other words: RTFS)
+
+How to include gob2 inside your project:
+
+	Put the gob2 distribution into a subdirectory in your main
+	project directory.  Use the AC_CONFIG_SUBDIRS to include that
+	directory in your configure run.  And finally add a file called
+	NOINST_GOB into your toplevel project directory (this can be done
+	inside your configure script in fact) so that gob2 doesn't install
+	itself.  Then just use the made gob2 binary as you would other
+	preprocessors.
+
+License:
+	- Gob itself is under GPL, the generated code is under public domain.
+	  See COPYING and COPYING.generated-code
+
+TODO:
+	- clean up code
+	- make it behave nice
+	- add warnings all over the place
+	- get a life (done, hence the lower rate of updates to gob!)
+
+George <jirka@5z.com>
+
+[
+  Note: if you are looking for the old GOB (for GTK+ objects), which is what
+  used to be here, look into the gob-1-0 branch in old gnome CVS!  It is
+  not maintained anymore.
+]
+

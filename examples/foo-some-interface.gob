@@ -1,0 +1,36 @@
+/*
+ * Example BonoboXObject class
+ *
+ * see GNOME_Foo_SomeInterface.idl
+ */
+requires 2.0.0
+
+%{
+/* some standard includes */
+#include <gnome.h>
+#include <bonobo.h>
+
+/* this requires you to use orbit-idl on GNOME_Foo_SomeInterface.idl first */
+#include "GNOME_Foo_SomeInterface.h"
+
+#include "foo-some-interface.h"
+#include "foo-some-interface-private.h"
+%}
+
+class Foo:Some:Interface from Bonobo:Object
+	(BonoboObject GNOME_Foo_SomeInterface)
+{
+
+	BonoboObject
+	private void
+	fooBar (PortableServer_Servant servant,
+	        const CORBA_char *string,
+	        CORBA_Environment *ev)
+	{
+		Self *self = SELF (bonobo_object_from_servant (servant));
+
+		/* your code here */
+	}
+
+	/* rest of class */
+}

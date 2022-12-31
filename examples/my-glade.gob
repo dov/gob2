@@ -1,0 +1,24 @@
+requires 2.0.12
+
+class My:Glade from Gtk:Window (GladeXML "my-glade.glade" "root")
+/* If you don't want to specify the glade file directly, you can use a global
+   variable or a macro as follows:
+ class My:Glade from Gtk:Window (GladeXML GLADE_FILE "root")
+*/
+{
+		private Gtk:Label * label1 GladeXML;
+		
+		public GtkWidget *
+		new(void)
+		{
+			MyGlade * self = GET_NEW;
+			
+			return GTK_WIDGET(self);
+		}
+		
+		public void
+		on_button1_clicked(self, GtkButton * button)
+		{
+			gtk_label_set_text(selfp->label1, "Vous venez d'appuyer sur le bouton A propos");
+		}
+}

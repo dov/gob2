@@ -1,0 +1,26 @@
+#include <Bonobo.idl>
+
+/* An example interface
+ *
+ * Do note that the GNOME namespace is not just a freeforall,
+ * so this file should not be installed as Foo is not a registered
+ * name.  To see the current namespece setup see doc/NAMESPACE
+ * in the bonobo cvs module or from a recent bonobo tarball.
+ * To register a new name under the GNOME namespace just drop
+ * a mail to:
+ * Michael Meeks <michael@ximian.com> or George Lebl <jirka@5z.com>
+ * and we'll get you all set.  (This is just to avoid conflicts in
+ * the namespace, and no it doesn't cost anything)
+ */
+
+module GNOME {
+
+module Foo {
+
+interface SomeInterface {
+	void fooBar (in string foo);
+};
+
+};
+
+};

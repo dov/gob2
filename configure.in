@@ -1,0 +1,62 @@
+dnl Process this file with autoconf to produce a configure script.
+AC_INIT([gob2], [2.0.20])
+AC_CONFIG_SRCDIR([src/treefuncs.h])
+AM_INIT_AUTOMAKE([dist-xz])
+
+AM_CONFIG_HEADER(config.h)
+AM_MAINTAINER_MODE
+
+GLIB_REQUIRED=2.4.0
+
+dnl
+dnl  An utter hack to allow embedding of gob inside other packages.
+dnl  if a file is found in the parent directory named NOINST_GOB, then
+dnl  gob is not installed
+dnl
+
+AM_CONDITIONAL(NOINSTGOB, test -f ../NOINST_GOB)
+
+dnl Is there a way to test NOINSTGOB here ?
+if test -f ../NOINST_GOB ; then
+  AC_MSG_RESULT([*** NOT Going to install GOB ***])
+  SUBDIRS="src examples"
+else
+  SUBDIRS="src examples doc"
+fi
+AC_SUBST(SUBDIRS)
+
+dnl Checks for programs.
+AC_ISC_POSIX
+AC_PROG_CC
+AC_STDC_HEADERS
+AC_PROG_YACC
+AM_PROG_LEX
+AC_PROG_INSTALL
+AC_PROG_CPP
+AC_PATH_PROG(RM, rm, /bin/rm)
+AC_PATH_PROG(MV, mv, /bin/mv)
+AC_PATH_PROG(TAR, tar, /bin/tar)
+PKG_CHECK_MODULES(GLIB, glib-2.0 >= $GLIB_REQUIRED)
+AC_SUBST(GLIB_CFLAGS)
+AC_SUBST(GLIB_LIBS)
+dnl We don't check popt since we're not using it at the moment, but
+dnl We just might use it later
+dnl AC_CHECK_LIB(popt,poptGetContext, [POPT_LIB="-lpopt"],
+dnl 	     AC_MSG_ERROR(Popt library not found, find it on ftp://ftp.redhat.com/pub/redhat/code/))
+dnl AC_SUBST(POPT_LIB)
+
+
+dnl AM_PROG_LIBTOOL
+
+AC_SUBST(CFLAGS)
+AC_SUBST(CPPFLAGS)
+AC_SUBST(LDFLAGS)
+AC_SUBST(YFLAGS)
+
+AC_OUTPUT([
+gob2.spec
+Makefile
+src/Makefile
+doc/Makefile
+examples/Makefile
+doc/gob2.1])

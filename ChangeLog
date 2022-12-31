@@ -1,0 +1,1845 @@
+Sat Dec 14 14:56:00 2013  Jiri (George) Lebl <jirka@5z.com>
+
+	* Release 2.0.20
+
+Sat Dec 14 14:55:05 2013  Jiri (George) Lebl <jirka@5z.com>
+
+	* src/*.[ch]: apply patches from Pedro L. Lucas to implement support
+	  for gtk3 and add names to properties and signals
+
+	* NEWS: update
+
+Tue Dec 18 21:13:09 2012  Jiri (George) Lebl <jirka@5z.com>
+
+	* Release 2.0.19
+
+Tue Dec 18 21:08:09 2012  Jiri (George) Lebl <jirka@5z.com>
+
+	* src/main.c: print unreftors and destructors before calling dispose
+	  or finalize as is the proper ordering.  Thanks to Dmitri Toubelis
+	  for pointing it out.
+
+Tue Dec 18 20:55:58 2012  Jiri (George) Lebl <jirka@5z.com>
+
+	* src/main.c: apply patch from Nick Bowler to not output
+	  line 0 statements for private functions that don't appear
+	  in gob file
+
+Sun Jul 15 06:21:55 2012  Jiri (George) Lebl <jirka@5z.com>
+
+	* src/main.c, src/out.c: Fix for empty file separator.  Thanks to
+	  H.-J. Schnitzer for pointing it out.
+
+	* src/lexer.l: add yywrap returning 1 as the default should
+	  not sure why I don't have -lfl working here.
+
+Thu Jan 06 11:30:03 2011  Jiri (George) Lebl <jirka@5z.com>
+
+	* Release 2.0.18
+
+Mon Jan 03 13:53:58 2011  Jiri (George) Lebl <jirka@5z.com>
+
+	* src/main.c, src/lexer.l, src/parse.y, src/treefuncs.def:  Add
+	  %ct{ %ctop{ which is like alltop but only for the C file.
+
+	* src/test.gob: add test
+
+	* doc/gob2.1.in: document
+
+	* configure.in: bump version
+
+Sat Oct 09 12:20:06 2010  Jiri (George) Lebl <jirka@5z.com>
+
+	* configure.in, src/Makefile.am: fixup some brokeneness, Thanks to
+	  Roland Clobus for sending a patch to make Cygwin build work
+
+Tue Jun 01 02:33:02 2010  Jiri (George) Lebl <jirka@5z.com>
+
+	* doc/gob2.1.in, src/main.c, gob2.m4:  Apply patches sent by
+	  Stephen Kitt.  Fixes some typos, gob2.m4 exits if gob is not found
+	  (fixes ubuntu #317801), and escape minus signs in the man page.
+
+	* README: generated code is public domain as COPYING.generated-code
+	  correctly states
+
+Fri Apr 02 14:57:20 2010  Jiri (George) Lebl <jirka@5z.com>
+
+	* src/main.c: Mention WFP in the help message
+
+	* Release 2.0.17
+
+Mon Mar 29 22:24:29 2010  Jiri (George) Lebl <jirka@5z.com>
+
+	* src/lexer.l: deal with \r in the input files
+
+	* src/parse.y: Fix segfaults when defining
+	  constructor/finalize/dispose using the new interface from
+	  last version.  Should fix debian bug #574542
+
+	* src/main.c: Use -G_MAXDOUBLE instead of G_MINDOUBLE and -G_MAXFLOAT
+	  instead of G_MINFLOAT.  That's the correct smallest value.  Thanks
+	  to Marcel Wagner wagmarcel at web dot de
+
+Wed Dec 23 14:02:11 2009  Jiri (George) Lebl <jirka@5z.com>
+
+	* src/util.c: fix remove_sep to avoid strcpy problems.  Patch from
+	  Ding-Yi Chen
+
+Tue Jul 21 10:20:58 2009  Jiri (George) Lebl <jirka@5z.com>
+
+	* Release 2.0.16
+
+Fri Jul 10 14:34:38 2009  Jiri (George) Lebl <jirka@5z.com>
+
+	* configure.in: raise version
+
+	* src/Makefile.am: fixup for new files
+
+	* src/main.c, src/parse.y, src/lexer.l, src/test.gob: Apply patch by
+	  Jean-Yves Lefort to add %afterdecls{ %} code handling
+
+	* doc/gob2.1.in: document
+
+Fri Jul 10 14:18:44 2009  Jiri (George) Lebl <jirka@5z.com>
+
+	* src/main.c, src/parse.y, doc/gob2.1.in, src/treefuncs.def,
+	  src/test.gob: Apply and somewhat rework
+	  the patch by Jean-Yves Lefort jylefort at brutele dot be to
+	  handle finalize, dispose, constructor just as init and
+	  class_init are handled.
+
+Fri Jul 10 12:23:39 2009  Jiri (George) Lebl <jirka@5z.com>
+
+	* src/main.c: add G_GNUC_CONST to _get_type, thanks to
+	  Jean-Yves Lefort jylefort at brutele dot be for pointing that
+	  out
+
+	* src/main.c: move #line sections past the opening brace of
+	  functions, enclose function declarations in #line sections
+	  to refer to the .gob file.  by Jean-Yves Lefort
+
+	* src/main.c, src/lexer.l, src/parse.y, src/str*, src/test.gob,
+	  doc/gob2.1.in:
+	  Partially back out the function attribute patch and rework it
+	  in a simpler, more flexible, though syntactically not as nice
+	  way.
+
+Fri Jul 10 10:22:10 2009  Jiri (George) Lebl <jirka@5z.com>
+
+	* doc/gob2.1.in: fix the _GET_CLASS documentation.  Thanks to
+	  Andrew Feren acferen at yahoo dot com.  I guess this has been an
+	  error in the docs since the GTK 1.x days
+
+Fri Jul 10 09:57:29 2009  Jiri (George) Lebl <jirka@5z.com>
+
+	* doc/gob2.1.in, src/checks.c, src/checks.h, src/lexer.l, src/main.c,
+	  src/parse.y, src/str.gob, src/str_test.c, src/test.gob,
+	  src/treefuncs.def: Apply patch by Britton Kerin
+	  bkerin at fastmail dot fm, to allow function attributes
+	  like G_GNUC_PRINTF, etc...
+
+	* src/main.c: fix a warning
+
+Tue Nov 20 23:22:57 2007  Jiri (George) Lebl <jirka@5z.com>
+
+	* Release 2.0.15
+
+Wed Oct 17 09:56:18 2007  Jiri (George) Lebl <jirka@5z.com>
+
+	* configure.in, NEWS: raise version, make NEWS
+
+Wed Oct 17 09:52:07 2007  Jiri (George) Lebl <jirka@5z.com>
+
+	* src/main.c, src/out.c: fix file_sep usage for private headers.
+	  Thanks to Jan Hudec for reporting this.
+
+Fri Sep 28 00:32:08 2007  Jiri (George) Lebl <jirka@5z.com>
+
+	* src/main.c, src/out.c: don't use /dev/null for portability to
+	  non-unix
+
+Fri Sep 28 00:00:24 2007  Jiri (George) Lebl <jirka@5z.com>
+
+	* examples/my-person.gob: fixup example to be correct
+
+Thu Sep 27 23:27:33 2007  Jiri (George) Lebl <jirka@5z.com>
+
+	* src/lexer.l: fix debian bug #443907, seg on bad include statement
+
+Thu Jan 05 10:09:32 2006  George (Jiri) Lebl <jirka@5z.com>
+
+	* Release 2.0.14
+
+Thu Jan 05 10:06:38 2006  George (Jiri) Lebl <jirka@5z.com>
+
+	* src/main.c: fix major segfault (oops!)
+
+Fri Dec 16 12:23:35 2005  George Lebl <jirka@5z.com>
+
+	* src/main.c, src/parse.y:  Fix for the libglade support from
+	  Nicolas Bruguier <gandalfn@club-internet.fr>
+
+	* src/checks.c, src/main.c, src/util.c: Allow BOXED in signal
+	  arguments.  patch by Big Thor <lirico@web.de>
+
+	* src/main.c, src/main.c, src/parse.y, src/treefuncs.def:
+	  Add abstract flag support, patch by Jean-Yves Lefort
+	  <jylefort@brutele.be>
+
+	* src/main.c: add --no-touch support to avoid unneccessary rebuilds
+	  even for source files.  Also avoid printing timestamp and 
+	  make the compare logic work without the 'cmp' command.
+	  patch by Jean-Yves Lefort <jylefort@brutele.be>
+
+	* doc/gob2.1.in: document changes above
+
+Fri Jul 22 13:10:20 2005  George Lebl <jirka@5z.com>
+
+	* Release 2.0.12
+
+	* doc/gob2.1.in: slight update
+
+Fri Jul 22 12:56:26 2005  George Lebl <jirka@5z.com>
+
+	* src/main.c: Apply patch from "Big Thor" <lirico@web.de> to
+	  not use TYPE_SELF for the privates code
+
+Fri Jul 22 12:48:27 2005  George Lebl <jirka@5z.com>
+
+	* Apply patch from Nicolas Bruguier <gandalfn@club-internet.fr>
+	  but changed the syntax slightly, fixed some minor glitches and
+	  added documentation.
+
+	* src/check.[ch], src/lexer.l, src/main.[ch], src/parse.y, 
+	  src/treefuncs.[ch],src/treefuncs.def: Add liglade support
+
+Fri Jul 22 11:41:20 2005  George Lebl <jirka@5z.com>
+
+	* src/lexer.l: allow parsing properties with no param spec, patch
+	  from Jean-Yves Lefort <jylefort@brutele.be>
+
+Wed Jul 06 16:35:14 2005  George Lebl <jirka@5z.com>
+
+	* src/main.c: Apply patch from Jean-Yves Lefort <jylefort@brutele.be>
+	  to fixup parameters: (remove MASK, CHILD_ARG and add LAX_VALIDATION
+	  and PRIVATE, and allow user created parameters).
+
+Thu Dec 23 14:35:12 2004  George Lebl <jirka@5z.com>
+
+	* src/main.[ch], src/lexer.l:  Add support for prealloc and add
+	  support for bitfields.  Patch from "K. Haley"
+	  <haleykd@users.sourceforge.net>
+
+Tue Oct 26 16:30:44 2004  George Lebl <jirka@5z.com>
+
+	* Release 2.0.11
+
+Tue Oct 26 16:27:44 2004  George Lebl <jirka@5z.com>
+
+	* src/main.c: fix compile when overrides and privates are used
+
+Wed Sep 22 17:12:25 2004  George Lebl <jirka@5z.com>
+
+	* Release 2.0.10
+
+Wed Sep 22 17:07:35 2004  George Lebl <jirka@5z.com>
+
+	* src/main.c: Apply patch from "K. Haley"
+	  <haleykd@users.sourceforge.net> to play nice with glibs private
+	  stuff and have the private structure be allocated by glib
+
+	* src/main.c, src/util.c: Apply patch from
+	  Pierre Gay <gay-pierre@wanadoo.fr> to add the --file-sep=c option
+	  which allows one to change the file separator character.
+
+	* doc/gob2.1.in: update docs
+
+	* src/parse.y: apply patch from debian bug#270546 by Frank
+	  Lichtenheld <djpig@debian.org> to fix c++ compilation of linked
+	  POINTER types by adding a proper cast at the right place
+
+	* src/main.c: always add string.h since it doesn't hurt and we missed
+	  it on some occasions
+
+	* src/main.c: destroywith and unrefwith function get cast with
+	  reinterpret_cast when using --for-cpp and don't get cast at all
+	  for C, but for C we cast the pointer going into the function
+	  to (gpointer).
+
+Tue Aug 10 16:32:00 2004  George Lebl <jirka@5z.com>
+
+	* src/main.c, src/parse.y, src/treefuncs.def: Apply patch from
+	  Jean-Yves Lefort <jylefort@brutele.be> to support overriding
+	  properties (g_object_class_override_property)
+	
+	* doc/gob2.1.in: update
+
+Thu Jul 29 10:47:31 2004  George Lebl <jirka@5z.com>
+
+	* configure.in, src/Makefile.am: Apply patch from "K. Haley"
+	  <haleykd@users.sourceforge.net> to fix handling of NOINSTGOB
+	  on certain platforms (apparently windows).
+
+Mon Jul 19 09:37:21 2004  George Lebl <jirka@5z.com>
+
+	* Release 2.0.9
+
+Mon Jul 19 09:30:18 2004  George Lebl <jirka@5z.com>
+
+	* src/main.c, src/test.gob, src/Makefile.am, src/parse.y:  Fix for
+	  -Wbad-function-cast which is kind of a moronic warning when it
+	  comes to enums so in non-C++ mode just use the generic gint and
+	  guint casts for enums and flags, on the other hand C++ really
+	  requires the proper enum casts, go figure.
+
+	* configure.in, NEWS: prepare for another release
+
+Thu Jul 08 16:22:56 2004  George Lebl <jirka@5z.com>
+
+	* src/main.c: Rework the unused var warning avoidance since it was
+	  causing different warnings.  I sort of now assume we're using
+	  gcc if we want no warnings, other compilers will likely get
+	  warnings in places.  But they probably got some warnings anyway.
+	  Also fixup all kinds of other places that cause warnings to popup.
+
+	* src/test.gob, src/Makefile.am:  Test for all kinds of warnings.
+
+Fri Jun 11 15:16:05 2004  George Lebl <jirka@5z.com>
+
+	* Release 2.0.8
+
+	* doc/gob2.1.in: quote the version in GOB2_CHECK
+
+Fri May 07 18:07:33 2004  George Lebl <jirka@5z.com>
+
+	* src/main.c: add -o,--output-dir command line option
+
+	* doc/gob2.1.in: document the above
+
+Tue May 04 22:34:00 2004  George Lebl <jirka@5z.com>
+
+	* src/parse.y, src/main.c, src/util.[ch]: move the make_me_type
+	  to util and use it when making the boxed property set/get function
+	  to fix boxed_type
+
+Tue Apr 13 11:32:51 2004  George Lebl <jirka@5z.com>
+
+	* doc/gob2.1.in: --always-private-header is NOT the default, but
+	  --ondemand-private-header is the default.
+
+Tue Mar 30 17:32:47 2004  George Lebl <jirka@5z.com>
+
+	* Release 2.0.7
+
+Tue Mar 30 17:27:32 2004  George Lebl <jirka@5z.com>
+
+	* src/checks.[ch], src/main.c: check for classwide members with
+	  destructors and warn there, since our classes are all static,
+	  we never destroy them anyway so this never happens.  It all
+	  depends on your setup, so we cannot do some atexit or whatnot.
+	  Also disallow BOXED or FLAGS in signal arguments since that doesn't
+	  work anyway and you can use POINTER and UINT instead.
+
+	* src/main.c, src/util.[ch]: fix the depracation fixing which broke
+	  everything since g_strup/g_strdown had different semantics
+	  then the new g_ascii_ versions.  So make our own
+	  gob_strup/gob_strdown functions with the old semantics.
+
+	* src/main.c: use our error function exclusively instead of g_error.
+
+	* src/util.c: fix the error function to correctly follow exit_on_warn
+	  and fix it when filename == NULL still
+
+	* src/test.gob: fix the test wrt BOXED and FLAGS
+
+Thu Feb 19 11:36:09 2004  George Lebl <jirka@5z.com>
+
+	* doc/gob2.1.in: further stupidity fix
+
+Thu Feb 19 11:31:40 2004  George Lebl <jirka@5z.com>
+
+	* doc/gob2.1.in, doc/makehtml.pl: fix a small error with the
+	  documentation and suppor the \& escape in the makehtml.pl script
+
+Thu Feb 19 11:17:45 2004  George Lebl <jirka@5z.com>
+
+	* src/lexer.l, src/Makefile.am: Apply patch from Albert Chin-A-Young
+	  <china@thewrittenword.com> to fix compilation on IBMs C compiler,
+	  by tweaking the includes and removing the -W options from AM_CFLAGS
+	  as those are supported only by gcc
+
+2003-02-08  Tomasz K³oczko <kloczek@pld.org.pl>
+
+	* gob2.m4: Trivial fix: added missing [] quotation macro name
+	  defined in AC_DEFUN() (neccessary for aclocal from automake 1.8.x
+	  and backward compatible with older auto tools).
+
+Tue Feb 03 12:57:45 2004  George Lebl <jirka@5z.com>
+
+	* src/main.c, src/util.c: Apply patch from Kjartan Maraas
+	  <kmaraas@broadpark.no> to remove use of deprecated functions
+
+Wed Jan 21 09:24:12 2004  Nicolas Bruguier <gandalfn@club-internet.fr>
+
+	* src/main.c: add INT64 and UINT64 type support for signal 
+	  and propeties
+
+Wed Aug 06 11:37:06 2003  George Lebl <jirka@5z.com>
+
+	* doc/gob2.1.in: very minor fix from my inbox from apr 03
+	  by Trevor Spiteri
+
+Tue May 20 10:22:40 2003  George Lebl <jirka@5z.com>
+
+	* Release 2.0.6
+
+Tue May 20 10:18:10 2003  George Lebl <jirka@5z.com>
+
+	* src/Makefile.am: fix some warnings related to newer automake
+
+Thu May 15 09:53:25 2003  George Lebl <jirka@5z.com>
+
+	* src/lexer.l: new flex is on drugs and it broke syntax (or
+	  well the generated code defines) so this will actually make things
+	  work with newer flex and still work with old flex (tested both
+	  2.5.4a and 2.5.31).
+
+Fri Feb 28 11:45:21 2003  George Lebl <jirka@5z.com>
+
+	* doc/gob2.1.in: minor update
+
+Thu Jan 16 12:45:33 2003  George Lebl <jirka@5z.com>
+
+	* Release 2.0.5
+
+Thu Jan 16 11:52:36 2003  George Lebl <jirka@5z.com>
+
+	* src/main.c: fix leak on signal emission
+
+Fri Dec 13 10:23:16 2002  George Lebl <jirka@5z.com>
+
+	* Release 2.0.4
+
+Thu Dec 12 09:35:46 2002  George Lebl <jirka@5z.com>
+
+	* src/main.c: use G_UNLIKELY/G_LIKELY if available in the get_type
+	  methods and in the signal argument size checking
+
+Thu Dec 05 10:32:09 2002  George Lebl <jirka@5z.com>
+
+	* src/lexer.l, src/main.c: fix a couple of gtkdoc issues,
+	  first add \n after _get_type and second support tabs
+	  after the leading * in gtkdoc comments
+
+2002-11-27  Jody Goldberg <jody@gnome.org>
+
+	* Release 2.1.3.1
+
+2002-11-01  Jody Goldberg <jody@gnome.org>
+
+	* src/parse.y (ensure_property) : patch obvious borkage in using item3
+	  in a production with 2 items.
+
+Fri Nov 01 14:41:52 2002  George Lebl <jirka@5z.com>
+
+	* src/lexer.l, src/util.c: when in cpp mode don't eat ::
+
+Mon Oct 14 16:16:38 2002  George Lebl <jirka@5z.com>
+
+	* src/parse.y: Fix segfault reported by Gerhard Dieringer
+	  <Gerhard.Dieringer@nexgo.de>
+
+	* src/main.c, src/util.c: Fix g_value_set/get for the unichar
+	  case (glib doesn't have this, so use uint, this is so braindead).
+	  Also add support for UNICHAR in places and add support for
+	  UINT64 and INT64
+
+Wed Sep 11 11:20:38 2002  George Lebl <jirka@5z.com>
+
+	* src/main.c: remove G_GNUC_CONST from the get_type, that seems to be
+	  wrong and causes gcc3.2 to whack out and all that.
+
+Tue Aug 20 11:01:52 2002  George Lebl <jirka@5z.com>
+
+	* Release 2.0.2
+
+Tue Aug 06 12:30:15 2002  George Lebl <jirka@5z.com>
+
+	* doc/gob2.1.in: escape all ' characters, to fix debian
+	  bug 155577.  Also add the homepage to the last section
+
+	* doc/makehtml.pl: improve handling of some troff and add
+	  automatic urlization of email and web addresses
+
+Tue Aug 06 12:08:20 2002  George Lebl <jirka@5z.com>
+
+	* src/test.gob: further tests
+
+Tue Aug 06 12:06:07 2002  George Lebl <jirka@5z.com>
+
+	* src/main.c: damnit s/shutdown/dispose/, why does glib change
+	  these on me.  I think there is an evil anti-gob plot in place.
+
+	* src/test.gob: add a test for unrefwith (should have been there in
+	  the first place to catch this)
+
+	* doc/gob2.1.in: update the unref/unrefwith section
+
+Mon Aug 05 11:11:01 2002  George Lebl <jirka@5z.com>
+
+	* src/parse.y: properly link the BOXED type (use g_value_set_boxed)
+
+Wed Jul 17 11:01:40 2002  George Lebl <jirka@5z.com>
+
+	* Release 2.0.1
+
+Wed Jul 17 10:52:29 2002  George Lebl <jirka@5z.com>
+
+	* src/test.gob: add more tests
+
+	* doc/gob2.1.in: minor updates
+
+	* src/lexer.l: allow comments in property definition code
+
+Tue Jul 16 13:33:51 2002  George Lebl <jirka@5z.com>
+
+	* NEWS, configure.in: prepare for 2.0.1
+
+Tue Jul 16 13:31:42 2002  George Lebl <jirka@5z.com>
+
+	* src/main.c, src/parse.y: Fix extra property types but still
+	  recognize if someone used the broken undocumented way which
+	  worked.  Also fix object linking to not rely on GtkObject, and
+	  fix BOXED linking as well.
+
+	* src/test.gob: add some tests for the above
+
+	* src/parse.y: fix C++ compilation for flags and enum linking
+
+Mon Jul 15 13:05:18 2002  George Lebl <jirka@5z.com>
+
+	* Release 2.0.0
+
+	* */Makefile.am: add '.' to SUBDIRS to silence a stupid version
+	  of bash
+
+Mon Jul 15 12:54:30 2002  George Lebl <jirka@5z.com>
+
+	* configure.in: raise version to 2.0.0
+
+	* examples/*: update examples and readme.  Remove old, bad examples
+
+	* doc/gob2.1.in: update for gob2
+
+Wed Jul 10 11:10:37 2002  George Lebl <jirka@5z.com>
+
+	* doc/gob2.1.in: update the docs a bit.  Still not finished.
+
+Tue May 28 12:09:56 2002  George Lebl <jirka@5z.com>
+
+	* Release 1.99.3
+
+Tue May 28 11:59:18 2002  George Lebl <jirka@5z.com>
+
+	* src/Makefile.am: some compilation voodoo
+
+	* src/main.c: Special case GtkEditable and GTypePlugin since
+	  those end in Class, and all other interfaces should end in
+	  Iface.  Long live code consistency!
+
+	* src/main.c: use g_signal_emitv instead of g_signal_emit.  This
+	  will allow us to once again have default returns and all that
+	  fun stuff.  It should also slightly reduce emission overhead.
+
+Mon Apr 15 09:55:29 2002  George Lebl <jirka@5z.com>
+
+	* README, COPYING.generated-code, Makefile.am: Add LGPL license
+	  for generated code and clarify this in the README.  Meant to do
+	  this a long time ago, and told everyone that who asked.  Now
+	  it's in writing.
+
+Sun Apr 14 19:12:02 2002  George Lebl <jirka@5z.com>
+
+	* src/parse.y: apply patch from Dennis Bjorklund <db@zigo.dhs.org>
+	  to fix export accessors function
+
+Fri Feb 01 15:19:07 2002  George Lebl <jirka@5z.com>
+
+	* Release 1.99.2
+
+Fri Feb 01 01:42:09 2002  George Lebl <jirka@5z.com>
+
+	* src/main.c: get rid of the old way of doing typesafe signal
+	  connection and make a new way where there are full connect
+	  macros for connect, connect_after and connect_data for each
+	  signal.  A bit more heavy weight (only at compile time), but
+	  it actually works, and is cleaner really.
+
+2002-01-22  Bastien Nocera  <hadess@hadess.net>
+
+	* src/main.c: (make_arguments): move the get_ and set_property before
+	parameters settings to work with latest glib
+
+Fri Jan 18 14:21:22 2002  George Lebl <jirka@5z.com>
+
+	* src/treefuncs.(def|c|h), src/parse.y, src/lexer.l, src/main.c:
+	  Implement GError definitions.
+
+Thu Jan 17 02:39:02 2002  George Lebl <jirka@5z.com>
+
+	* gob2.m4: fix version check
+
+	* configure.in, src/Makefile.am: some build fixes and raise version
+
+Thu Jan 10 22:05:42 2002  George Lebl <jirka@5z.com>
+
+	* src/parser.y, src/lexer.l, src/main.c, src/Makefile.am,
+	  src/test.gob, src/treefuncs.(def|c|h):  Implement using of
+	  interfaces.  That is, you can now implement interfaces on your
+	  objects.  You still can't define interfaces, that's step two.
+
+Sun Dec 30 18:25:25 2001  George Lebl <jirka@5z.com>
+
+	* src/main.c: Apply patch from Josh Parsons <jp30@st-andrews.ac.uk>,
+	  to fix some code generation
+
+	* src/parse.y: Be anal in linking string properties.
+
+Thu Dec 20 17:39:32 2001  George Lebl <jirka@5z.com>
+
+	* src/main.c: Apply patch from Josh Parsons <jp30@st-andrews.ac.uk>
+	  to enhance the m4 support, fix init function generation and
+	  correctly include glib-object.h.  Massage it a bit further as
+	  well.
+
+Mon Nov 05 11:45:46 2001  George Lebl <jirka@5z.com>
+
+	* src/lexer.l, src/parser.y, src/main.c, src/treefuncs.def:
+	  Add flags and enum creation code, so you can do things in
+	  a more gob like manner rather then the glib-mkenums setup.
+
+2001-10-27  Seth Nickell  <snickell@stanford.edu>
+
+	Make BonoboObject stuff work, almost as much fun as
+	blowing goats and twice as messy. Built code still
+	requires a patch to libbonobo to run (changing the
+	name of the TYPE macro to fit w/ GNOME standards),
+	so retaining a warning that BonoboObject doesn't
+	really work (oh, but it does :-)
+
+	* configure.in:
+
+	Make sure to substitute YFLAGS so you don't get undefined
+	crap when you use @YFLAGS@ in Makefile.am.
+	
+	* src/main.c: (add_bonobo_object_get_type)
+
+	Add a GObject type function for BonoboObject stuff.
+	
+	* src/main.c: (make_bonobo_object_epv)
+
+	Append self_ to function call as per gob2.
+	
+	* src/main.c: (add_inits), (print_class_block)
+	* src/parse.y:
+	* src/treefuncs.c: (ensure_quarks), (copy_class), (copy_method),
+	(free_class), (setv_class), (setv_method):
+	* src/treefuncs.def:
+	* src/treefuncs.h:
+
+	Change to using BonoboObject rather than BonoboXObject.
+
+	* examples/foo-some-interface.c
+
+	Update to work with GOB2 with BonoboObjectTechnology(TM).
+	
+2001-10-26  Seth Nickell  <snickell@stanford.edu>
+
+	* src/Makefile.am:
+
+	Add top_srcdir to the include flags to pick up config.h
+	on my system.
+
+Sat Oct 20 17:40:58 2001  George Lebl <jirka@5z.com>
+
+	* src/Makefile.am: a few fixes
+
+Sat Oct 20 16:59:19 2001  George Lebl <jirka@5z.com>
+
+	* src/lexer.l, src/main.c, src/Makefile.am: Apply m4 preprocessing
+	  patch by Josh Parsons <jp30@st-andrews.ac.uk>
+
+Sat Sep 29 17:00:39 2001  George Lebl <jirka@5z.com>
+
+	* doc/Makefile.am: update
+
+Sat Sep 29 16:44:13 2001  George Lebl <jirka@5z.com>
+
+	* doc/gob2.1.in:  update a tad and add a note that the manual
+	  is now out of date
+
+Sat Sep 29 16:33:57 2001  George Lebl <jirka@5z.com>
+
+	* gob2.spec.in: update for gob2
+
+Fri Sep 28 17:39:57 2001  George Lebl <jirka@5z.com>
+
+	* **/*: Merge from gob-2 to HEAD
+
+Fri Sep 28 17:08:19 2001  George Lebl <jirka@5z.com>
+
+	* configure.in, gob2.spec.in, gob2.m4, doc/gob2.1.in, Makefile.am,
+	  doc/Makefile.am: rename rest of files for gob2
+
+	* src/main.c: minor cleanup
+
+Thu Sep 27 21:56:17 2001  George Lebl <jirka@5z.com>
+
+	* src/generate_treefuncs.pl, src/treefuncs.def, src/parse.y,
+	  src/main.c:  Revamp the tree funcs stuff to be saner and cooler,
+	  and fix some crashes and other things related to this.
+
+	* src/parse.y, src/lexer.l, src/main.c, src/util.[ch],
+	  src/checks.[ch], treefuncs.def:  Add properties (GParam), fix
+	  C++ generation, add GET_NEW_VARG, whack the propname alias for
+	  arguments setters/getters (they're deprecated anyway)
+
+	* src/test.gob: update tests
+
+Sun Sep 16 13:07:37 2001  George Lebl <jirka@5z.com>
+
+	* src/main.c: replace GOB_ prefix for local functions with
+	  self_.  This makes much more sense.
+
+Sun Sep 16 12:43:24 2001  George Lebl <jirka@5z.com>
+
+	* src/lexer.l, src/parse.y, src/main.c, src/treefuncs.(def|c|h),
+	  src/util.[ch], src/test.gob: Add syntax for properties (GParam
+	  or whatever you call these:).  The code behind them is not yet
+	  there though.
+
+Sun Aug 12 16:15:46 2001  George Lebl <jirka@5z.com>
+
+	* src/main.c, src/parse.y, src/test.gob, src/util.c:  Things now
+	  make compilable objects, including with signals, how well it
+	  works I don't know.  cpp support seems broken in glib mostly.
+
+Sat Jun 30 15:01:26 2001  George Lebl <jirka@5z.com>
+
+	* Applied the following from HEAD
+
+ Sat Jun 30 14:57:37 2001  George Lebl <jirka@5z.com>
+
+	* doc/gob.1.in: add documentation for (export)
+
+ Tue Jun 26 15:54:08 2001  George Lebl <jirka@5z.com>
+
+	* src/Makefile.am: add built sources to EXTRA_DIST
+
+ 2001-06-24  Mark Brown  <broonie@sirena.org.uk>
+
+	* src/main.c: Default to PRIVATE_HEADER_ONDEMAND rather than
+	  PRIVATE_HEADER_ALWAYS as per documentation.
+
+	* doc/gob.1.in: Fix cut & paste error in object_{get,set}
+	  examples.
+
+ Sat Jun 09 13:38:53 2001  George Lebl <jirka@5z.com>
+
+	* src/parse.y: was freeing the wrong token
+
+ 2001-06-03  Eskil Heyn Olsen  <eskil@eskil.dk>
+
+	* examples/my-person.gob:
+	Fixed some comments
+	
+	* examples/test-export.gob:
+	File that tests the (export) keyword.
+	
+	* src/parse.y:
+	Added a (export) keyword to argument, so gob will
+	autodefine the my_object_[get|set]_var functions.
+
+Sun May 13 02:45:43 2001  George Lebl <jirka@5z.com>
+
+	* src/main.c: revert the GET_NEW_VARG since it just won't work
+	  with non-gcc systems
+
+Sun May 13 02:31:52 2001  George Lebl <jirka@5z.com>
+
+	* src/main.c: add GET_NEW_VARG macro/static func (for non-gcc)
+	  and add TYPE_SELF macro
+
+Sun May 13 02:02:47 2001  George Lebl <jirka@5z.com>
+
+	* src/util.c: patch from Frederic Crozat <fcrozat@mandrakesoft.com>
+	  to fix warning
+
+Sat Apr 21 20:06:10 2001  George Lebl <jirka@5z.com>
+
+	* examples/Makefile.am, examples/README,
+	  examples/GNOME_Foo_SomeInterface.idl,
+	  examples/foo-some-interface.gob:  Add an example for BonoboXObject
+
+Sat Apr 21 19:33:08 2001  George Lebl <jirka@5z.com>
+
+	* configure.in:  Raise version to 1.0.9
+
+	* src/lexer.l:  Properly check major version requirements (majors
+	  must match in the requires line)
+
+	* src/parse.y, src/main.c, src/treefuncs.(def|c|h), src/checks.c:
+	  Add direct BonoboXObject support
+
+	* src/parse.y: fix the chunks usage
+
+	* doc/gob.1.in: document BonoboXObject stuff, fix the bugs section
+	  wrt gtk-doc which has been supported for quite some time
+
+Sat Apr 14 00:11:50 2001  George Lebl <jirka@5z.com>
+
+	* configure.in: compile with glib 2.0
+
+	* src/test.gob, src/Makefile.am: make the test glib pure, or mostly
+	  so
+
+	* src/lexer.l: added fixme
+
+	* src/main.c: work on signals a little bit
+
+Fri Apr 13 21:23:19 2001  George Lebl <jirka@5z.com>
+
+	* src/checks.[ch], src/lexer.l, src/main.c, src/parse.y,
+	  src/treefuncs.[ch], src/treefuncs.def:  Work on gobject support,
+	  based on the patch Sven sent me.  Also do add unref as well as
+	  destroy handlers to vars, and moved the destructors to finalize and
+	  unreffers to shutdown.  This all compiles, but that doesn't mean it
+	  makes usable objects.
+
+Fri Apr 13 17:45:14 2001  George Lebl <jirka@5z.com>
+
+	* src/parse.y, doc/gob.1.in: Fix a problem found by Eric Kidd
+	  <eric.kidd@pobox.com>, where objectlink was not completely
+	  refcounting safe.  Could underref if you set the same object.
+
+Sat Mar 31 00:24:58 2001  George Lebl <jirka@5z.com>
+
+	* src/main.c: fix crash with marshallers of signals with a return
+          type and no arguments.
+
+Sun Mar 04 19:14:03 2001  George Lebl <jirka@5z.com>
+
+	* src/main.c, src/checks.c, src/util.[ch]:  Remove the underscore
+	  hack, remove the 1.2 code from the 1.3 compat hacks, make all
+	  short names start with GOB_.  Start of the direct GObject
+	  support, gob compiles, but it will not create useful object
+	  files yet.
+
+Tue Feb 27 06:14:59 2001  George Lebl <jirka@5z.com>
+
+	* configure.in, src/Makefile.am, README: this is the gob-2 branch
+	  for GObject support
+
+Tue Feb 27 00:53:41 2001  Jonathan Blandford  <jrb@redhat.com>
+
+	* README: Use my new-found maintainer status!!! The power!
+
+Sun Feb 25 17:17:46 2001  George Lebl <jirka@5z.com>
+
+	* Release 1.0.7
+
+Sun Feb 25 16:57:45 2001  George Lebl <jirka@5z.com>
+
+	* src/main.c, src/checks.c: to make doing BonoboXObjects possible
+	  allow overriding the _get_type function.
+
+	* doc/gob.1.in: document the above
+
+Sun Feb 11 16:33:07 2001  George Lebl <jirka@5z.com>
+
+	* Release 1.0.6
+
+Sat Feb 10 18:42:59 2001  George Lebl <jirka@5z.com>
+
+	* src/Makefile.am: fix the build
+
+2001-02-08  Maciej Stachowiak  <mjs@eazel.com>
+
+	* src/Makefile.am: Remove BUILT_SOURCES stuff; Automake knows how
+	to handle .l and .y files directly, and including the .c files as
+	well was making it fail to link as it would try to link in lexer.o
+	and parse.o twice.
+
+Thu Feb 08 02:43:22 2001  George Lebl <jirka@5z.com>
+
+	* src/main.c:  add signal connection typesafety macros
+
+	* src/test.gob, doc/gob.1.in: new stuff foo
+
+	* configure.in: raise version
+
+Thu Feb 08 01:42:52 2001  George Lebl <jirka@5z.com>
+
+	* src/Makefile.am: rule for parse.h includes parse.c, and
+	  SOURCES include BUILT_SOURCES
+
+Tue Dec 26 11:03:44 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: Remove ## from the varargs macro stuff, as it's not
+	  needed and causes trouble for newer gcc's (like in rh7)
+
+Sun Sep 10 18:04:07 2000  George Lebl <jirka@5z.com>
+
+	* Release 1.0.5
+
+Fri Sep 01 03:45:30 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: add G_GNUC_CONST to the _get_type function
+
+Wed Aug 23 15:05:40 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: when a method has no arguments make an argumentless
+	  macro for the shortform to avoid a parse error
+
+	* src/test.gob: add a test for the above
+
+Sun Aug  6 22:21:38 2000  Eskil Heyn Olsen <eskil@eazel.com>
+	
+	* gob.m4 now defaults to WARN instead of ERROR on missing
+	gob.
+
+Tue Jul 25 16:54:34 2000  George Lebl <jirka@5z.com>
+
+	* Release 1.0.4
+
+	* configure.in: raise version to 1.0.4
+
+	* src/main.c: fixup the -anal macro patch.
+
+	* src/util.[ch], src/main.c: constize (not in 1.0.4)
+
+	* src/main.c: the short form pointers unified for both gnu and non-gnu
+	  (not in 1.0.4)
+
+Sun Jul 23 18:51:45 2000  George Lebl <jirka@5z.com>
+
+	* src/util.[ch], src/main.c, src/checks.c, src/lexer.l, src/parse.y:
+	  make new cleaner error print routines including a printfstyle one.
+	  Use the get_real_id on all method ids even for overrides.  When a
+	  signal is added there is also a sizeof check for the signature vs.
+	  argument list with a g_error if it fails.  Fix %at{ %} to not
+	  appear twice in all files.
+
+	* src/main.c: Apply patch from Arturo Tena to make things compile
+	  nicely with gcc's -ansi -pedantic
+
+	* src/out.[ch]: constize correctly and use G_GNUC_PRINTF macro for
+	  warnings.
+
+Fri Jul 21 15:38:10 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: store the private structure pointer so that we
+	  don't look inside the freed object structureafter finalize
+
+Thu Jul 06 02:32:29 2000  George Lebl <jirka@5z.com>
+
+	* Release 1.0.3
+
+Wed Jul 05 19:37:20 2000  George Lebl <jirka@5z.com>
+
+	* src/{main.c,parse.y}: couple of cleanups, and fixup the gtk 1.3
+	  support
+
+Wed Jul 05 18:57:13 2000  George Lebl <jirka@5z.com>
+
+	* src/{checks.c, main.c, parse.y, test.gob}:  Apply and fix up patch
+	  from Bas van der Linden <linden@win.tue.nl> that adds the ability
+	  to use const on the "self" argument as well.  Also adds a CONST
+	  casting macro to use.
+
+	* src/main.c: Fix a memory leak when destroy wasn't overriden and
+	  destructors were added, it now properly calls the parent handler.
+	  Same with finalize.
+
+	* src/main.c: Spit out some macro magic foo to hopefully make it
+	  possible to compile objects with GTK+ 1.3/2.0
+
+	* doc/gob.1.in, examples/*.gob:  We should never do
+	  GTK_OBJECT(GET_NEW) as that's a memory leak due to some weird
+	  GTK_OBJECT() semantics
+
+Fri Jun 30 14:08:53 2000  George Lebl <jirka@5z.com>
+
+	* Release 1.0.2
+
+Fri Jun 30 13:11:05 2000  George Lebl <jirka@5z.com>
+
+	* doc/gob.1.in: add doc for --always-private-struct
+
+	* src/main.c: fix output of --help.  Also print __GOB_FUNCTION__
+	  for inits and for get/set_arg.  And print the get_real_id to
+	  avoid the underscore.
+
+Mon Jun 26 00:06:45 2000  George Lebl <jirka@5z.com>
+
+	* src/parse.y: for stringlink, dup the string on argument
+	  getting
+
+	* doc/gob.1.in: update documentation to the above change
+
+Sun Jun 25 03:34:02 2000  George Lebl <jirka@5z.com>
+
+	* src/treefuncs.def, src/main.c, src/utils.[ch], src/parse.y: sane
+	  parsing of const.  Get rid of "stars" integer and just use a
+	  "pointer" string.  Also the types in general are more sanely parsed,
+	  thus recognizing hopefully all legal (and some illegal) C types.
+
+	* src/checks.[ch], src/main.c: checks the argument type to be one we can
+	  truly check.
+
+	* src/treefuncs.def, src/main.c, src/parse.y, src/lexer.l:  Apply
+	  patch from Bas van der Linden <linden@win.tue.nl> that adds the
+	  possibility to use chunks to allocate objects.
+
+	* src/main.c: Apply patch from Bas van der Linden <linden@win.tue.nl>
+	  to add a __GOB_FUNCTION__ define to each function
+
+	* src/Makefile.am, src/main.c, src/lexer.l, src/generate_treefuncs.pl:
+	  avoid and fix warnings, and compile with all warnings
+
+	* src/main.[ch]: add an --always-private-struct option to always put
+	  in the private pointer, even if there are no private members.
+
+	* src/test.gob: add some more tests for new stuff
+
+Wed Jun 07 15:03:18 2000  George Lebl <jirka@5z.com>
+
+	* Release 1.0.1
+
+Wed Jun 07 14:41:24 2000  George Lebl <jirka@5z.com>
+
+	* configure.in, doc/gob.1.in: updates
+
+Mon Jun 05 12:10:46 2000  George Lebl <jirka@5z.com>
+
+	* doc/gob.1.in: run through ispell, and fix option stuff to produce
+	  nicer html output with groff
+
+Thu Jun 01 18:12:13 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: Make the private header switches work again.
+
+Wed May 31 01:50:25 2000  George Lebl <jirka@5z.com>
+
+	* Release 1.0.0
+
+Wed May 31 01:47:23 2000  George Lebl <jirka@5z.com>
+
+	* src/gob.1.in: documentation of makefile rules for gob.
+
+Tue May 30 11:02:36 2000  George Lebl <jirka@5z.com>
+
+	* src/lexer.l: Accept identifiers in array dimensions, this is so
+	  that you can make these some constants.
+
+Sat May 20 18:22:33 2000  George Lebl <jirka@5z.com>
+
+	* Release 0.93.5
+
+Sat May 20 18:22:23 2000  George Lebl <jirka@5z.com>
+
+	* src/{main.c,checks.[ch]}: check for duplicate overrides, it is
+	  different from checking symbol names as they don't conflict with
+	  other symbols AND they only conflict if both the name and their
+	  type match
+
+Sat May 20 16:38:06 2000  George Lebl <jirka@5z.com>
+
+	* src/{main.[ch],util.[ch],checks.c}: Add underscore removal for
+	  non-override methods.  This means that local aliases will include
+	  prepended underscores, but when the full name is generated, or
+	  when the method name is added to class structure, the underscore
+	  is removed.
+
+	* src/checks.c: overrides no longer checked for uniqueness, a more
+	  complex logic is needed.
+
+	* src/{main.c,treefuncs.def,parse.y}:  override naming is done
+	  with a unique id, so that we handle cases where two classes have
+	  the same method name.
+
+	* doc/gob.1.in: update for the above.
+
+Sat May 20 14:42:00 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: the private structure is now freed in finalize again and
+	  thus do the same dance around finalize as we do around destroy. 
+	  Clean up some code.  NULL all things being destroyed.  The arbitary
+	  destructor uses memset as those things might not be just pointers.
+
+Thu May 11 23:48:44 2000  George Lebl <jirka@5z.com>
+
+	* src/main.[ch]: provide the Self and SelfClass typedefs in addition
+	  to SELF, IS_SELF, SELF_CLASS macros.  All of these can now be
+	  disabled with the --no-self-alias option
+
+	* doc/gob.1.in: update
+
+	* configure.in: raise version
+
+Tue May 09 23:18:16 2000  George Lebl <jirka@5z.com>
+
+	* src/parse.y: fix segfault on parse error and give better error
+	  message
+
+Tue May 09 21:54:10 2000  George Lebl <jirka@5z.com>
+
+	* doc/gob.1.in, src/main.c:  Add destruction code into the destroy
+	  handler rather then finalize.  Setup an extra function if
+	  neccessary to handle returns correctly as this must be called
+	  after any user code.
+
+Sat Apr 29 14:41:42 2000  George Lebl <jirka@5z.com>
+
+	* Release 0.93.4
+
+Sat Apr 29 14:40:40 2000  George Lebl <jirka@5z.com>
+
+	* src/checks.c: code prettification
+
+	* src/lexer.l, src/parse.y, src/test.gob: change "class" scope to
+	  "classwide" scope, not to overload the class keyword
+
+	* src/main.[ch]: make private header files be generated by default,
+	  and cleanup that part a bit
+
+	* doc/gob.1.in: add documentation of classwide
+
+	* NEWS:
+
+Fri Apr 21 17:15:09 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: add spaces after commas
+
+	* src/lexer.l, src/main.c, src/parse.y: add class scope variables
+	  which are put into the class structure
+
+	* src/test.gob: added a test for class variables
+
+	* src/treefuncs.def: added CLASS_SCOPE
+
+	* src/treefuncs.h: regenerated
+
+Mon Apr 17 20:13:47 2000  George Lebl <jirka@5z.com>
+
+	* src/parse.y: on objectlink instead of just ref, do ref/sink.
+
+Sat Apr 15 23:07:30 2000  George Lebl <jirka@5z.com>
+
+	* Release 0.93.3
+
+Sat Apr 15 22:42:20 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: fixes for ANSI C and C++.  Just use GTK_VALUE_POINTER
+	  instead of GTK_VALUE_OBJECT so that we don't have to cast and don't
+	  cast lvalues.
+
+Sat Apr 15 22:09:49 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: use the generic return type in signal marshallers
+	  rather then the specific one as the marshallers are truly generic
+
+Sat Apr 15 21:52:52 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: fix some typesafety braindamages with OBJECT types
+	  in arguments by casting GTK_VALUE_OBJECT to gpointer.  Also
+	  for seting arguments cast the ARG to atype if it exists
+
+Wed Apr 05 13:42:28 2000  George Lebl <jirka@5z.com>
+
+	* src/parse.y: never allow NONE to be used as one of many arguments,
+	  always only by itself in the argument list
+
+	* src/main.c: When printing out the signal marshaller prototype,
+	  don't print out the NONE (void) into the argument list, thanks
+	  to Soeren Sandmann <sandmann@daimi.au.dk> for reporting that
+
+Mon Apr 03 13:07:33 2000  George Lebl <jirka@5z.com>
+
+	* examples/Makefile.am: add my-person2.gob to EXTRA_DIST
+
+Sun Apr 02 18:09:40 2000  George Lebl <jirka@5z.com>
+
+	* Release 0.93.2
+
+Sun Apr 02 17:38:12 2000  George Lebl <jirka@5z.com>
+
+	* src/Makefile.am: ass the .pl and .def file to EXTRA_DIST
+
+Sun Apr  2 14:37:49 PDT 2000 Manish Singh <yosh@gimp.org>
+
+	* configure.in: check for treefuncs.h instead of tree.h, since
+	  the latter has gone bye-bye
+
+Sat Apr 01 23:27:47 2000  George Lebl <jirka@5z.com>
+
+	* doc/gob.1.in: add documentation for defreturn
+
+Sat Apr 01 18:03:31 2000  George Lebl <jirka@5z.com>
+
+	* src/{treefuncs.(def|c|h),generate_treefuncs.pl}: What would gob
+	  be without some automatically generated code.  The tree.[ch] was
+	  hard to keep up and didn't have free/copy so these do, otherwise
+	  it is the same.  Also added a defreturn field to methods
+
+	* src/*.[cyl]: include treefuncs.h rather then tree.h
+
+	* src/{parse.y,lexer.l,main.c}: use the defreturn as the default for
+	  return values of signals and virtual methods.  If this is not
+	  defined use the onerror or failing that '0'.  onerror is also not
+	  a reserved keyword anymore
+	
+	* configure.in: raise version
+
+Mon Mar 27 13:08:01 2000  George Lebl <jirka@5z.com>
+
+	* Release 0.93.1
+
+Mon Mar 27 12:04:22 2000  George Lebl <jirka@5z.com>
+
+	* src/util.[ch], src/main.c: figure out if we really need the special
+	  types, also make a hash for the gtk types instead of linear
+	  searching it all the time.
+
+	* src/{lexer.c,checks.c,main.c}: minor fixes and cleanups
+
+2000-03-21  Eskil Heyn Olsen  <deity@eskil.dk>
+
+	* gob.m4: do not default GOB to no when not found (did that make
+	sense ?)
+	And better error message.
+
+Mon Mar 20 14:35:35 2000  George Lebl <jirka@5z.com>
+
+	* src/lexer.l: handle single word typenames with an empty namespace
+
+Sun Mar 05 02:23:04 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: add #lines around setting default handlers
+
+	* src/parse.y: fix line number for 'destroywith' destructors
+
+Sat Mar 04 15:33:18 2000  George Lebl <jirka@5z.com>
+
+	* src/checks.c: duplicate name test for arguments and signals is
+	  case insensitive now as those could cause trouble
+
+Mon Feb 28 02:45:27 2000  George Lebl <jirka@5z.com>
+
+	* Release 0.93.0
+
+Sun Feb 27 20:59:45 2000  George Lebl <jirka@5z.com>
+
+	* src/parse.y,doc/gob.1.in: For stringlink, just return a pointer on
+	  get rather then strduping as that is 1) consistent with objectlink
+	  and 2) more flexible.
+
+Sun Feb 27 20:38:19 2000  George Lebl <jirka@5z.com>
+
+	* src/{main.c,tree.[ch],parse.y}: add the arbitrary destruction handler
+	  for data members
+
+	* doc/gob.1.in: updated and fixed up
+
+	* configure.in,NEWS,examples/{README,my-person2.gob}: change version
+	  to 0.93.0
+
+Sun Feb 27 18:37:57 2000  George Lebl <jirka@5z.com>
+
+	* NEWS,doc/gob.1.in,examples/{README,my-person.gob,my-person2.gob}:
+	  update of docs and examples to include the new features and minor
+	  fixups
+
+Sun Feb 27 04:41:41 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: make the output nicer for classes with no methods
+	  better typechecking in get/set_arg, fix a couple of C++ issues,
+
+	* src/{main.c,parse.y,tree.[ch]}: automatic linking of arguments to
+	  data members.  Also alow empty statements inside a class.  Also
+	  add automatic data member destruction for pointer data, and
+	  automatic initialization for any data member.
+
+	* src/main.[ch],src/out.c: add --no-lines which inhibits printing
+	  of #line things to output files
+
+	* doc/gob.1.in: update for the above
+
+Fri Feb 25 15:21:47 2000  George Lebl <jirka@5z.com>
+
+	* Release 0.92.4
+
+Fri Feb 25 14:46:51 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: add SELF casting macros
+
+	* doc/gob.1.in: document the above
+
+Fri Feb 25 02:29:26 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c,src/tree.[ch],src/parse.y: public signals get
+	  GTK_RUN_ACTION added.  Plus an interface for adding additional
+	  flags is added.
+
+	* doc/gob.1.in: add docs for the above
+
+Fri Feb 25 01:37:20 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: fix trailing comma on the end of the argument enum
+
+Sun Feb 13 23:54:53 2000  George Lebl <jirka@5z.com>
+
+	* doc/gob.1.in: add doc patch from Dave Dunkin <dunkind@letu.edu>
+
+	* doc/gob.1.in,examples/*.gob: use init(self) to be more consistent
+	  in naming
+
+Sat Feb 12 14:42:15 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c,src/lexer.l: apply patches from Dave Dunkin
+	  <dunkind@letu.edu> to add all and alltop ccode sections
+	  and to add a --no-write,-n option to not actually write
+	  any files.  Also did some very cosmetic changes to code
+
+Mon Feb 07 23:45:04 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: use the magic /*< private >*/ and /*< public >*/
+	  comments to distinguish public and protected data members
+
+Mon Feb 07 03:02:48 2000  George Lebl <jirka@5z.com>
+
+	* Release 0.92.3
+
+Mon Feb 07 02:50:11 2000  George Lebl <jirka@5z.com>
+
+	* src/lexer.l: error on multiple classes
+
+	* src/main.c: nicer header output
+
+	* src/{lexer.l,main.c}: Eat out gtk-doc like inline doc entries
+	  and stuff them into the output files where appropriate
+
+	* doc/gob.1.in: added docs for gtk-doc like inline doc stuff
+
+	* examples/{README, gtk-button-count.gob}: added inline docs
+
+Fri Feb 04 01:07:54 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: use G_GNUC_UNUSED rather then our own macro for a
+	  very slightly cleaner looking output file
+
+2000-01-31  Eskil Heyn Olsen  <deity@eskil.dk>
+
+	* gob.m4: checks for gob binary, GOB_CHECK([version [,
+ 	action_if_found[, action_if_not_found]]]).  
+
+	* Makefile.am: Install gob in $prefix/share/aclocal
+
+Thu Jan 27 17:50:11 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: add #include <stdlib.h>
+
+Mon Jan 24 22:52:47 2000  George Lebl <jirka@5z.com>
+
+	* Release 0.92.2
+
+Mon Jan 24 22:23:47 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: add a protecting define before the object typedef
+
+	* doc/gob.1.in: add docs for the new stuff
+
+Sun Jan 23 16:19:54 2000  George Lebl <jirka@5z.com>
+
+	* src/{lexer.l,parse.y,tree.[ch],main.c}: make more types of header
+	  %{ %} blocks, "headertop" and "privateheader" and made short as
+	  well as long names possible.
+
+	* src/main.c: add an --no-extern-c option to not put entern "C" into
+	  the output, which is now put in by default even if --for-cpp is
+	  on so that it is possible to call those from C by default
+
+Thu Jan 20 01:50:45 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: put the _real_ functions in our normal private
+	  namespace of ___* to be more consistent.
+
+Mon Jan 10 00:16:43 2000  George Lebl <jirka@5z.com>
+
+	* src/{main.[ch],util.[ch],checks.[ch]}: offload some functionality to
+	  extra files
+
+	* src/main.c: cleanup the generation routine by spliting it up into
+	  more functions
+	  
+	* src/{main.h,lexer.l,parse.y,out.c}: put some needed externs into the
+	  main.h file and include that rather then doing it in the .c files
+
+Thu Jan 06 18:33:44 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: use ___ for the signal marshalling typedefs as well
+
+Thu Jan 06 17:32:46 2000  George Lebl <jirka@5z.com>
+
+	* Release 0.92.1
+
+Thu Jan 06 17:13:22 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: be consistent with the use of "namespacing", we
+	  prefix ALL internal gob stuff with "___".  This should make it
+	  easier to avoid name conflicts with user code and glibc/gcc (Which
+	  seems to use __ prefix)
+
+	* src/main.c: check for init and class_init names for non-constructor
+	  methods and give an error if found.
+
+	* src/main.c: check argument types and flags for correctness, error
+	  on unknown type, but just a warning on unknown flag
+
+	* doc/gob.1.in: add a section for name conflicts
+
+Wed Jan 05 02:23:21 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: doh! the symbols for the aliases need to be declared as
+	  static.
+
+Wed Jan 05 02:13:59 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: just realized that args... for macros is a GNU
+	  extention and so the PARENT_HANDLER no longer uses it, but prints
+	  the argument names with __ prefixed into the argument list.
+
+Wed Jan 05 01:58:32 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: if using gnu c, also define macros using varargs for
+	  function aliases.  This should allow the compiler to optimize
+	  further and if we have arguments for the defines there are
+	  no adverse side effects as there are for straight defines.
+
+Wed Jan 05 01:48:12 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: fixup the aliases.  They didn't actually work right.
+	  now we set it up as a const pointer to a function using typeof.
+
+Tue Jan 04 17:57:55 2000  George Lebl <jirka@5z.com>
+
+	* src/lexer.l: add support for 'requires x.y.z' line.  This is
+	  so that a .gob file can require at least version x.y.z of gob
+
+	* src/test.gob: update
+
+	* doc/gob.1.in: update for requires and run trhough ispell
+
+Tue Jan 04 17:10:54 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: fix the non-gnu aliases
+
+Tue Jan 04 16:46:16 2000  George Lebl <jirka@5z.com>
+
+	* src/{main.c,parser.y,tree.[ch]}: add optional C type specification
+	  to arguments for full type safety 
+
+	* doc/gob.1.in: updated
+
+Tue Jan 04 15:34:16 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: --no-gnu option to completely disable any use
+	  of GNU C extentions.  This is for those weird people that don't
+	  wish to use those extentions even with GNU C.
+
+Tue Jan 04 14:43:49 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: use some GNU extentions (guarded with #ifdef __GNUC__)
+	  to make arguments fully typesafe, and to make it easier for
+	  GNU to optimize the aliases, as well as to avoid the ugly
+	  hack on GNU C.
+
+	* src/main.c: don't put #line 0 for the .gob file for method prototypes
+
+	* src/main.c: move the _priv structure freeing into finalize to enable
+	  people to work with the private stuff inside the destroy handler
+
+	* src/main.c: use #line before every precondition check so that failed
+	  checks should point to the function prototype rather then into
+	  generated file.
+
+	* src/main.c: remove the _END_ARG macro
+
+	* src/main.c: add GOB_VERSION_MAJOR, GOB_VERSION_MINOR and
+	  GOB_VERSION_PATCHLEVEL defines into the generated C file
+
+	* src/out.c: don't redundantly put #line for outfile if we're already
+	  in the outfile
+
+	* configure.in: raise version number
+
+Tue Jan 04 02:22:33 2000  George Lebl <jirka@5z.com>
+
+	* src/main.c: add argument wrapper macros to make the argument system
+	  a little more type safe.
+
+Fri Dec 31 17:39:22 1999  George Lebl <jirka@5z.com>
+
+	* Release 0.92.0
+
+Thu Dec 30 20:20:36 1999  George Lebl <jirka@5z.com>
+
+	* src/main.c: correctly handle the complex fundemental types,
+	  so that we can handle ALL the fundemental types for signals
+
+Thu Dec 30 19:29:56 1999  George Lebl <jirka@5z.com>
+
+	* src/main.c: don't use function types for casts in marshallers,
+	  but default types we get from our GTK_TYPE_* -> C type translation,
+	  and use this fact to check for same function types and combine
+	  signal prototypes.  This doesn't yet handle well complex types,
+	  but I have an idea how to make complex types work.  Though
+	  I dunno if it's actually worth it.
+
+Thu Dec 30 17:18:27 1999  George Lebl <jirka@5z.com>
+
+	* src/main.c: figure out some types from GTK types and cast properly
+	  when emitting a signal.  This catches some inconsistencies in
+	  signal func argument lists and the GTK types of the arguments.
+
+Wed Dec 29 18:04:13 1999  George Lebl <jirka@5z.com>
+
+	* src/parse.y: allow scope, public/private/protected, to come before
+	  the signal or virtual keyword for consistency's sake.
+
+Wed Dec 29 01:39:30 1999  George Lebl <jirka@5z.com>
+
+	* src/{tree.[ch],parser.y}: cleanup scope stuff
+
+	* src/{lexer.l,parser.y,tree.h,main.c}: add protected keyword and
+	  methods.  protected methods are put into the -private files and
+	  are real exported functions just like public.  protected data
+	  members act like pre-0.91.x private datamembers, that is they
+	  get stuck into the public header, but marked /* protected */.
+
+	* src/main.c: change the method body printing function so that we
+	  can catch the no return warning properly and send us to the .gob
+	  file instead of the .c file.
+
+	* src/{parse.y,main.c}: handle empty publics/privates/overrides
+	  and handle the body being set to ';' rather then '{}'
+
+	* src/main.c: check for empty nonvoid regular methods, and error out
+	  on finding them as that would produce warnings which we can't catch
+	  and it is generally bad to do anyway
+
+	* src/{parse.y,tree.[ch],main.c}: use char pointers for C buffers,
+	  and kill leading/trailing whitespace from them to make the C files
+	  nicer and easier to recognize empty functions.
+
+	* src/main.c: add a --version switch
+
+	* doc/gob.1.in: Update with the above changes
+
+	* configure.in: raise version
+
+Tue Dec 28 20:49:56 1999  George Lebl <jirka@5z.com>
+
+	* src/main.c: apply patch from ChiDeok Hwang <cdhwang@sr.hei.co.kr>
+	  to make the hack function static so that we don't pollute namespace
+
+Mon Dec 27 19:56:24 1999  George Lebl <jirka@5z.com>
+
+	* Release 0.91.2
+
+Mon Dec 27 03:00:25 1999  George Lebl <jirka@5z.com>
+
+	* src/main.c: fixup PARENT_HANDLER to work well with non-void
+	  functions, the macro becomes an expression if the function is
+	  not void and returns the return of the parent or the onerror
+	  expression if the function pointer was NULL.
+
+Mon Dec 27 02:25:32 1999  George Lebl <jirka@5z.com>
+
+	* src/parse.y: allow completely empty classes
+
+	* src/main.c: don't add the ugly hack function if there are no
+	  methods
+
+Mon Dec 27 01:26:26 1999  George Lebl <jirka@5z.com>
+
+	* src/parse.y: fixup the virtual rule as I forgot to shift the
+	  argument numbers when adding to the expression
+
+Mon Dec 27 01:07:14 1999  George Lebl <jirka@5z.com>
+
+	* src/parse.y: add optional public keyword to virtuals and signals,
+	  (which doesn't do anything, only consistency). I should perhaps
+	  rewrite and simplify this part of the parser
+
+	* src/lexer.l: fix a bug with empty braces producing a segfault
+	  on public and private methods
+
+	* doc/gob.1.in: add a section about Constructor methods (init
+	  class_init) and fix init_class -> class_init
+
+	* configure.in: raise version to 0.91.2
+
+Tue Dec 14 00:06:00 1999  George Lebl <jirka@5z.com>
+
+	* Release 0.91.1
+
+Mon Dec 13 23:25:06 1999  George Lebl <jirka@5z.com>
+
+	* src/{main.c,out.c}: create a private header file and stick
+	  the private structure definition inside it.  Add option
+	  --no-private-header for 0.91.0 behaviour and
+	  --always-private-header to force private header creation
+
+	* doc/gob.1.in: update WRT above changes
+
+	* examples/my-person.gob: include the private header
+
+	* NEWS: update
+
+Mon Dec 13 18:30:09 1999  George Lebl <jirka@5z.com>
+
+	* src/main.c: don't print spurious #line's into the private
+	  structure
+
+	* src/{main.c,tree.[ch],lexer.l,parse.y}: implement support for 
+	  array types for data members and function arguments
+
+Mon Dec 13 00:48:47 1999  George Lebl <jirka@5z.com>
+
+	* Release 0.91.0
+
+Sun Dec 12 22:55:12 1999  George Lebl <jirka@5z.com>
+
+	* doc/gob.1.in: added paragraph noting that private data members
+	  cannot be accessed above the class definition in the .gob file
+
+Sun Dec 12 22:08:31 1999  George Lebl <jirka@5z.com>
+
+	* src/main.c: implement real private data members as promised in
+	  the documentation, this however breaks some compatiblity with
+	  things that already used the 'private' keyword for data members
+
+	* doc/gob.1.in: document private data member stuff
+
+	* NEWS: update
+
+	* src/main.c: a couple of sanity checks of the code to prevent weird
+	  errors on some broken .gob code
+
+	* configure.in: update version to 0.91.0
+
+Sun Dec 05 14:20:26 1999  George Lebl <jirka@5z.com>
+
+	* src/{lexer.l,main.c}: if we find the class header #include
+	  statement in a %{ %} section above class definition, don't
+	  include it ourselves.
+
+	* doc/gob.1.in: remove the note about the include always first from
+	  BUGS, and make a new section for the include file.
+
+Thu Nov 25 13:09:08 1999  George Lebl <jirka@5z.com>
+
+	* Release 0.90.5
+
+Thu Nov 25 13:00:52 1999  George Lebl <jirka@5z.com>
+
+	* src/main.c: don't error out on a symbol conflict if the types of
+	  the symbol node don't match (variable,method)
+
+Sat Nov 20 16:15:42 1999  George Lebl <jirka@5z.com>
+
+	* src/main.c: add PARENT_HANDLER macro to make calling parent
+	  handlers in override functions easier
+
+Fri Nov 19 16:41:09 1999  George Lebl <jirka@5z.com>
+
+	* src/main.c: add a type macro
+
+Thu Nov 18 22:56:09 1999  George Lebl <jirka@5z.com>
+
+	* src/parse.y: add a warning check if the number of GTK types of
+	  a signal doesn't seem to be correct for the given number of
+	  function arguments
+
+Tue Nov 16 01:23:45 1999  George Lebl <jirka@5z.com>
+
+	* src/main.c: support a "no-touch-headers" mode in which the
+	  headers are not touched unless they actually really changed,
+	  not on by default as it confuses automake
+
+Tue Nov 16 00:36:42 1999  George Lebl <jirka@5z.com>
+
+	* src/{main.c,lexer.l,parser.y,out.c}: Implement a C++ mode, get
+	  rid of C++ errors/warnings when in C++ mode, and get rid of
+	  the 'this' pointer finally (it's been deprecated long enough)
+
+Mon Nov 15 23:45:37 1999  George Lebl <jirka@5z.com>
+
+	* src/main.c: add prototype for the really bad hack function to
+	  avoid warning
+
+Mon Nov 15 23:42:06 1999  George Lebl <jirka@5z.com>
+
+	* src/main.c: generate correct function pointers in the structure
+	  for signals and virtuals.  Also use a much nicer system instead
+	  of the method name defines, we now just set a bunch of static
+	  pointers, this removes a whole lot of headaches actually
+
+	* doc/gob.1.in: repair to reflect the above (I removed the define
+	  BUGS paragraph)
+
+Sun Nov 14 17:57:34 1999  George Lebl <jirka@5z.com>
+
+	* doc/gob.1.in: repair some things that confused troff and add
+	  a C preprocessor warning to BUGS
+
+Sat Nov 13 17:22:49 1999  George Lebl <jirka@5z.com>
+
+	* **/Makefile.am, configure.in: fix the conditional installation
+	  stuff, don't even go into the doc directory if we aren't installing
+
+Sat Nov 13 16:53:20 1999  George Lebl <jirka@5z.com>
+
+	* doc/gob.1.in: describe BUGS better
+
+Sat Nov 13 16:20:41 1999  George Lebl <jirka@5z.com>
+
+	* src/lexer.l: don't kill C++ style comments from C blocks
+
+Sat Nov 13 16:16:59 1999  George Lebl <jirka@5z.com>
+
+	* src/{lexer.l,main.c,out.c}: fixed spurious newline printing, don't
+	  kill comments from C blocks so that line counts are right, accept
+	  newlines in strings, and don't take \'\"\' as a string delimiter
+
+Sat Nov 13 14:53:26 1999  George Lebl <jirka@5z.com>
+
+	* src/main.c: don't add gtk_object_class to class_init if we only
+	  have non-GtkObject overrides to avoid warning
+
+Sat Nov 13 14:31:25 1999  George Lebl <jirka@5z.com>
+
+	* configure.in,src/Makefile.am,doc/Makefile.am: check for
+	  ../NOINST_GOB and in case it's found don't install self
+
+Fri Nov 12 16:25:35 1999  George Lebl <jirka@5z.com>
+
+	* configure.in,Makefile.am,src/main.c: don't use popt, our arguments
+	  are simple enough and popt doesn't seem to be widely used yet
+
+Sun Sep 05 22:08:40 1999  George Lebl  <jirka@5z.com>
+
+	* Release 0.90.2
+
+Sun Sep 05 22:08:33 1999  George Lebl  <jirka@5z.com>
+
+	* doc/gob.1.in: updated for private virtual and signal wrappers
+
+Sun Sep 05 21:50:19 1999  George Lebl  <jirka@5z.com>
+
+	* configure.in: raise version and actually set POPT_LIB correctly
+
+	* src/Makefile.am: use POPT_LIB
+
+Sun Sep 05 21:45:54 1999  George Lebl  <jirka@5z.com>
+
+	* src/tree.h,src/main.c,src/parse.y: add support for private signals
+	  and virtuals
+
+	* src/parse.y: fix bug with bogus vararg methods
+
+Sun Sep 04 17:44:37 1999  George Lebl  <jirka@5z.com>
+
+	* Release 0.90.1
+
+Sat Sep 04 17:18:22 1999  George Lebl  <jirka@5z.com>
+
+	* src/lexer.l,src/parse.y,src/main.c,src/tree.[ch]: support
+	  variable arguments for public and private methods
+
+Sat Sep 04 16:51:11 1999  George Lebl  <jirka@5z.com>
+
+	* lexer.l,parse.y: accept const in parameter lists
+
+Sun Aug 29 13:46:33 1999  George Lebl  <jirka@5z.com>
+
+	* Release 0.90.0
+
+Sat Aug 28 23:36:48 1999  George Lebl  <jirka@5z.com>
+
+	* src/main.[ch],parse.y: make error/warning reporting public
+	  and use it to report depreciated use of 'this'
+
+Sat Aug 28 22:41:52 1999  George Lebl  <jirka@5z.com>
+
+	* src/tree.[ch],parse.y,main.c: check for duplicate variables and
+	  signals and arguments as well.
+
+Sat Aug 28 22:00:19 1999  George Lebl  <jirka@5z.com>
+
+	* src/parse.y,src/main.c: change "this" to "self", but accept "this"
+	  as well
+
+	* src/main.c: check for duplicate methods, and warn on non-public
+	  "new" method
+
+	* configure.in: change to version 0.90.0
+
+	* doc/gob.1.in: change this to self
+
+Tue Aug 24 20:37:26 1999  George Lebl  <jirka@5z.com>
+
+	* Release 0.0.4
+
+Thu Aug 19 03:18:03 1999  George Lebl  <jirka@5z.com>
+
+	* src/main.c: also count overrides to avoid an unused variable on
+	  class_init
+
+Thu Aug 19 03:08:49 1999  George Lebl  <jirka@5z.com>
+
+	* src/parse.y: in a check, we can check not only about numbers
+	  but for tokens as well
+
+Wed Aug 18 12:54:17 1999  George Lebl  <jirka@5z.com>
+
+	* Release 0.0.3
+
+Tue Aug 17 22:24:47 1999  George Lebl  <jirka@5z.com>
+
+	* src/lexer.l,src/parse.y: don't use reserved words for check type
+	  last first and null
+
+	* src/{lexer.l,parse.y,tree.[ch],main.c}: add #line's to output
+	  files
+
+	* src/out.[ch]: new functions for output so that we can easily add
+	  #line's to files
+
+	* src/main.c: fix get/set arguments
+
+	* doc/gob.1.in: updated for newer version and spellchecked, also
+	  gob.1 is generated by configure now to get versions correct
+
+	* gob.spec.in: added a spec file
+
+Fri Jul 30 02:19:05 1999  George Lebl  <jirka@5z.com>
+
+	* src/parse.y: accept simple char types
+
+	* src/main.c: make prototypes look better, and don't output arg stuff
+	  when it won't be used
+
+	* Makefile,src/Makefile: add test make target
+

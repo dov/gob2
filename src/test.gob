@@ -1,0 +1,721 @@
+/* this is a TEST file, it's VERY VERY ugly, it's just supposed to test
+   the parser of gob and somewhat test some output as well, you can
+   look in here to see a whole array of different syntax options, but
+   don't expect this to be an easy to read file */
+
+requires 2.0.18
+
+%ct{
+	/* very very top of C file useful for "config.h" sort of like alltop
+	 * but only for C file */ 
+%}
+
+%at{
+/* ALL TOP */
+%}
+
+%ctop{
+	/* Just like ct above */
+%}
+
+%headertop{
+/* this should go on the very top of the header */
+
+%}
+%ht{
+/* this should go on the very top of the header as well */
+%}
+%ph{
+/* this should go into the private header */
+%}
+%privateheader{
+/* this should go into the private header as well*/
+%}
+
+%afterdecls{
+	/* between the declarations and the method implementations */
+%}
+
+
+
+%{
+#include <stdio.h>
+#include <gtk/gtk.h>
+/* the next line is not mandatory, but if gob finds an include in one of
+   the %{ %} sections above the class definitions, it will not put it in
+   the file itself.  So you can this way select where the include file is
+   at */
+#include "test-object.h"
+#include "test-object-private.h"
+
+/* this is to test if the lexer won't get confused by requires inside
+   some c code
+requires 99.99.99
+*/
+
+static void jjjj(void);
+
+#define _(x) x
+%}
+
+%h{
+enum _gob__enum_t {
+	BUDLIKY, BUDLIKY2
+};
+
+struct _gob__struct_t {
+	int i, x, y, z;
+};
+union _gob__union_t {
+	int i, x, y, z;
+};
+void bubu(void);
+
+/* Fake boxed */
+#define PACKAGE_TYPE_BOXED 1
+typedef void * PackageBoxed;
+
+%}
+%header{
+/* this should be in the header, just under bubu prototype */
+#define TEST_ARRAY 5
+%}
+
+enum LAME_CLIENT {
+	IS_CONNECTED,
+	NONE = 9,
+	LAST
+} Test:Enum;
+
+flags BUGA_BUGA {
+	ONE,
+	TWO,
+	MANY,
+} Some:Flags;
+
+error TEST_OBJECT_ERROR {
+	BAD_THIS,
+	BAD_THAT
+} Test:Object:Error;
+
+enum BUBLE {
+        KEIN = 0,
+        STANDARD,
+        STANDARD_RO,
+        KOMPLETT,
+        ALT
+} Buble:Enum;
+
+class Test:Object from /*G:Object*/ Gtk:Container
+	(interface Gtk:Tree:Model)
+	/* We can add more interfaces by adding more lines like the above */
+	/* Note that there must exist a GtkTreeModelIface structure */
+{
+
+	/* function implemented for the Gtk:Tree:Model interface */
+	interface Gtk:Tree:Model
+	private GtkTreeModelFlags
+	get_flags (Gtk:Tree:Model *self (check null type))
+	{
+		/* FOO */
+		return (GtkTreeModelFlags)0;
+	}
+
+
+
+	public int test_array[TEST_ARRAY];
+	public int i;
+	argument INT i set { self->i = ARG; } get { ARG = self->i; } ;
+
+	public int testing = 1;
+	argument INT testing link;
+
+	public char * testingstring = {g_strdup("test")}
+		destroywith g_free;
+	argument POINTER testingstring stringlink;
+
+	public Test:Object * testingobj
+		unrefwith g_object_unref;
+	argument POINTER testingobj objectlink;
+
+	public Test:Object * testingobjllll
+		unrefwith gtk_widget_destroy;
+	argument POINTER testingobjllll objectlink;
+
+	public Test:Object * testingobjfoo
+		unref { if (VAR) g_object_unref (VAR); };
+	argument POINTER testingobjfoo objectlink;
+
+	classwide int foo = 20;
+	argument INT foo link;
+
+	public G:Object * testingobj2
+		destroy {
+			if(VAR)
+				g_object_unref(G_OBJECT(VAR));
+		};
+	argument POINTER (type G:Object *) testingobj2 objectlink;
+	
+	argument POINTER (type GObject *) some_object
+		set { /* set some_object */ }
+		get { /* get some_object */
+			ARG=NULL; };
+	argument (CONSTRUCT) LONG (type long) write_only_long
+		set { /* set write_only_long */ };
+	argument POINTER (type char *) read_only_string
+		get { /* get readonly_long */
+			ARG = g_strdup("BLAH"); };
+
+	private char a_property;
+	property CHAR a_property
+		(
+		 name="a-property",
+		 nick = _("Nick"),
+		 blurb = _("Blurb"),
+		 minimum = 'a',
+		 maximum = 'Z',
+		 default_value = 'C',
+		 export)
+		set { self->_priv->a_property = g_value_get_char (VAL); }
+		get { g_value_set_char (VAL, self->_priv->a_property); };
+
+	property OBJECT foobarblahllll1
+		(nick = "xxxxxxx1",
+		 blurb = "yyyyyy",
+		 object_type = Gtk:Button)
+		get { /* FOO1 */ };
+	property OBJECT foobarblahllll2
+		(nick = "xxxxxxx2",
+		 blurb = "yyyyyy",
+		 object_type = G:Object)
+		set { /* FOO2 */ };
+
+	private double dblnum;
+	property DOUBLE dblnum
+		(nick = _("dblnum"),
+		 blurb = _("dblnum"),
+		 minimum = 0.1,
+		 maximum = 99.1,
+		 default_value = 0.3,
+		 flags = CONSTRUCT|CONSTRUCT_ONLY,
+		 export,
+		 link);
+
+	private char *b_property;
+	property STRING b_property
+		(nick = _("Nick b"),
+		 blurb = _("Blurb b"),
+		 default_value = "default",
+		 type = char *,
+		 flags = CONSTRUCT,
+		 export,
+		 link);
+
+	private Test:Object *objectproperty;
+	property OBJECT objectproperty (nick   = "object",
+				blurb  = "obj property",
+				object_type = Test:Object,
+				link);
+
+	private Test:Enum enum_property;
+	property ENUM enum_property (nick   = "enumprop",
+				blurb  = "enumprop",
+				enum_type = Test:Enum,
+				link);
+
+	private Some:Flags flags_property;
+	property FLAGS flags_property (nick   = "flagsprop",
+				blurb  = "flagsprop",
+				flags_type = Some:Flags,
+				link);
+
+	  private PackageBoxed prop;
+	  property BOXED prop (nick="prop",
+			       blurb="prop",
+			       boxed_type=Package:Boxed,
+			       link);
+	  /* testing old semantics */
+	  private PackageBoxed prop2;
+	  property BOXED prop2 (nick="prop2",
+			       blurb="prop2",
+			       boxed_type=PACKAGE_TYPE_BOXED,
+			       link);
+
+	private char ov_prop;
+	property CHAR ov_prop
+		(export,
+		 override)
+		set { self->_priv->ov_prop = g_value_get_char (VAL); }
+		get { g_value_set_char (VAL, self->_priv->ov_prop); };
+
+
+	private int j;
+	public GObject * h;
+	public char *bleh;
+	public double array[23][18];
+	protected unsigned long int wagawaga;
+	public int wagawaga_should_be_after_this_in_the_header;
+
+	init(object) {
+	        object->i=0;
+	}
+	class_init(klass) {
+		/*IN CLASS INIT  */
+	}
+
+	/**
+	 * new:
+	 * @j: foo
+	 *
+	 * budliky budliky
+	 *
+	 * Returns: new object
+	 */
+	public GObject * new(int j (check > 0)) {
+		GObject *ret;
+		ret = G_OBJECT (GET_NEW);
+
+		SELF(ret)->_priv->j = j;
+
+		return ret;
+	}
+	private int blah(self, G:Object * wid (check null type),
+			 int h (check > 0)) onerror -1 {
+		g_object_set (G_OBJECT (self),
+			      TEST_OBJECT_PROP_I (99),
+			      NULL);
+		return h;
+	}
+	/**
+	 * bleh:
+	 * @self: foo
+	 * @wid: foo
+	 * @h: foo
+	 *
+	 * budliky budliky 2
+	 *
+	 * Returns: new object
+	 **/
+	signal last STRING "bleh-signal" (POINTER, INT)
+	char * bleh(self, G:Object * wid (check null type),
+		        int h (check > 0)) {
+		return self_blah(self,wid,h) > 0 ? g_strdup ("foo") : g_strdup ("bar");
+	}
+
+	constructor(self) {
+		/* constructor stuff */
+	}
+
+	dispose(self) {
+		/* dispose stuff */
+	}
+
+	finalize(self) {
+		/* finalize stuff */
+	}
+
+	private
+	char *
+	test_handler (self, GObject *w, int h, gpointer data)
+	{
+		data = w = NULL;
+		h = 0;
+			
+		return NULL;
+	}
+
+	/**
+	 * gtk_weird_button_bleh2:
+	 * @self: foo
+	 * @wid: foo
+	 * @h: foo
+	 *
+	 * budliky budliky 3
+	 *
+	 * Returns: new object */
+	signal last INT (POINTER, INT)
+	int bleh2(self, const G:Object * wid (check null type),
+		        int h (check > 0)) {
+
+		test_object_connect__bleh (self, self_test_handler, NULL);
+		self_connect__bleh (self, self_test_handler, NULL);
+		test_object_connect_after__bleh (self, self_test_handler, NULL);
+		self_connect_after__bleh (self, self_test_handler, NULL);
+		test_object_connect_data__bleh (self, self_test_handler, NULL, NULL, 0);
+		self_connect_data__bleh (self, self_test_handler, NULL, NULL, 0);
+
+		wid = NULL;
+		h = 0;
+
+		/* testing multiple marshaller support */
+		return 0;
+	}
+	/* this should not get documented as it's nonstandard */
+	/**
+	 * bloh:
+
+	 ******/
+
+	/* Here we are testing how the gtk-doc extraction code error handeling
+	   it should just ingore these */
+	/**
+	  */
+
+	/** */
+	/**
+	 *
+	 * bubu
+	 *********/
+	/**
+	 *
+	 * bubu
+	 **zblunk*******/
+	/**
+	 *
+	 * bubu
+	 *zblunk*******//**//**/
+	signal first NONE (NONE)
+	void bloh(self);
+	virtual void * bah(self, int h (check > 0)) onerror NULL defreturn 0 {
+		self_beh(self,h);
+		return NULL;
+	}
+	virtual int beh(self, int h (check > 0));
+	override(Gtk:Container)
+	void add(Gtk:Container * self (check null type),
+                 Gtk:Widget * wid (check null type)) {
+		PARENT_HANDLER(self,wid);
+	}
+
+	override(G:Object)
+	void dispatch_properties_changed (G:Object      *object,
+					  guint	   n_pspecs,
+					  GParamSpec  **pspecs)
+	{
+		object = NULL;
+		n_pspecs = 0;
+		pspecs = NULL;
+		/* EKI! */
+	}
+
+	public int consttest(self, const gchar *text, ...)
+	{
+		text = NULL;
+		return 25;
+	}
+	public int consttest2(self, gchar const *text, ...)
+	{
+		text = NULL;
+		return 25;
+	}
+	public int consttest3(self, G:Object const *wid (check null type))
+	{
+		wid = NULL;
+		return 25;
+	}
+	public int consttest4(const self)
+	{
+		return 25;
+	}
+	public int consttest5(self const)
+	{
+		return 25;
+	}
+	virtual int consttest6(const self)
+	{
+		return 25;
+	}
+	virtual int consttest7(self const)
+	{
+		return 25;
+	}
+	public int consttest8(self)
+	{
+		Self const *selfconst1, *selfconst2;
+		selfconst1 = SELF_CONST(self);
+		selfconst2 = TEST_OBJECT_CONST(self);
+		return 25;
+	}
+	public int consttest9(const self, int i, double b)
+	{
+		b = 0.0;
+		i = 0;
+		return 25;
+	}
+	public int consttest10(self const, int i, double b)
+	{
+		b = 0.0;
+		i = 0;
+		return 25;
+	}
+	public gchar *funcattrtest(self, const char *format (check null), ...)
+	        attr {G_GNUC_PRINTF (2, 3)}
+	{
+	        gchar *result;
+
+	        va_list ap;
+	        va_start(ap, format);
+	        result = g_strdup_vprintf (format, ap);
+	        va_end(ap);
+	        return result;
+	}
+	private gchar *funcattrtest2(self, const char *format, ...)
+	        attr {G_GNUC_SCANF(2,3)}
+	{
+	        gchar *nonsense = NULL;
+	        format = format;
+                return nonsense;
+	}
+        protected gchar *funcattrtest3(self, const char *format)
+	        attr {G_GNUC_FORMAT (2)}
+        {
+	        gchar *nonsense = NULL;
+	        format = format;
+                return nonsense;	        
+	}
+	private char *funcattrtest4(self, const char *format, ...)
+	        attr {G_GNUC_PRINTF(2,3)}
+                onerror NULL
+	{
+	        gchar *nonsense = NULL;
+	        format = format;
+                return nonsense;	        
+	}
+	protected char * funcattrtest5(self, const char *format, ...)
+	        onerror NULL
+	        attr {G_GNUC_PRINTF(2,3)}
+	{
+	        gchar *nonsense = NULL;
+	        format = format;
+                return nonsense;	        
+	}
+	public char * funcattrtest6(self, const char *format, ...)
+	        attr {G_GNUC_PRINTF(2,3)}
+                onerror NULL 
+        {
+	        gchar *nonsense = NULL;
+	        format = format;
+                return nonsense;	        
+	}
+	// Note that the parser should accept defreturn with function
+	// attributes as well, but this may not be a good thing since
+	// it probably doesn't make sense, so we don't test it.
+	signal private first NONE (NONE)
+	void googlegoogle(self)
+	{
+		puts("TEST1");
+		self_googlegoogle2(self);
+	}
+	signal first private NONE (NONE)
+	void googlegoogle2(self)
+	{
+		int array[5][8][9]={{{0}}};
+		Self *foo = self;
+		puts("TEST2");
+		self_testprivvirtual(foo, array);
+	}
+	private signal first NONE (NONE)
+	void googlegoogle3(self)
+	{
+		puts("TEST3");
+	}
+	protected signal first NONE (NONE)
+	void googlegoogle4(self)
+	{
+		puts("TEST4");
+	}
+	protected signal first NONE (NONE)
+	void googlegoogle_const1(const self)
+	{
+		puts("TEST4");
+	}
+	protected signal first NONE (NONE)
+	void googlegoogle_const2(self const)
+	{
+		puts("TEST4");
+	}
+	virtual private
+	void testprivvirtual(self, int some_array[5][8][9])
+	{
+		puts("TEST3");
+		self_googlegoogle(self);
+		if (some_array[0]) return;
+	}
+	private virtual
+	void testprivvirtual2(self, const int some_array[5][8][9])
+	{
+		/* nothing here */
+		if (some_array[0]) return;
+	}
+	public virtual
+	void testpublicvirtual(self, int const some_array[5][8][9])
+	{
+		/* nothing here */
+		if (some_array[0]) return;
+	}
+	protected virtual
+	void testprotectedvirtual(self, int some_array[5][8][9])
+	{
+		/* nothing here */
+		if (some_array[0]) return;
+	}
+	signal first NONE (POINTER, ENUM)
+	void testarrsignal(self, long arr[8], Buble:Enum foo)
+	{
+		/* foo */
+		arr[0] = 1;
+		foo = BUBLE_KEIN;
+	}
+
+	/* testing empty func */
+	public void foofoofoo(self) {}
+	/* testing empty func 2 */
+	public void foofoofoo2(self);
+	/* testing empty func 3 */
+	public void foofoofoo3(self) {   }
+	/* testing empty func 4 */
+	public void foofoofoo4(self)
+	{
+	}
+
+//	override (Gtk:Widget)
+//	int event(Gtk:Widget *self (check null type),
+//		  GdkEvent *event (check null)) onerror FALSE
+//	{
+//		int ret;
+//		/* some code */
+//		ret = PARENT_HANDLER(self,event);
+//		/* some code */
+//		return ret;
+//	}
+//	override(Gtk:Container)
+//	void
+//	remove(Gtk:Container * self (check null type),
+//	       Gtk:Widget * wid (check null type));
+//
+//	override(Gtk:Object)
+//	void
+//	destroy(Gtk:Object * self (check null type))
+//	{
+//		/* foo bar */
+//		PARENT_HANDLER(self);
+//	}
+
+	protected
+	int foobar(self) {
+		/* just an empty function */
+		return 5;
+	}
+
+	signal last NONE(CHAR,UCHAR,BOOLEAN,INT,UINT,LONG,ULONG,FLOAT,DOUBLE,
+			 STRING,ENUM,POINTER,OBJECT)
+	void
+	testargs(self, gchar a, guchar b, gboolean c, gint d, guint e, glong f,
+		 gulong g, gfloat h, gdouble i, gchar * j, gint k,
+		 gpointer o, GObject *p)
+	{
+		h = i = k = 0;
+		a = b = c = d = e = f = g = 0;
+		o = p = (GObject *)NULL;
+		j = (char *)NULL;
+		/* ugh, testing casting */
+	}
+
+	public signal (NO_HOOKS) last INT (INT)
+	int testflags(self, int w (check > 0)) defreturn -99 {
+		/*foo*/
+		return w;
+	}
+
+	/* testing NONE */
+	signal BOOLEAN (NONE)
+	gboolean
+	test_none_thing (self)
+	{
+		return FALSE;
+	}
+
+	/* some more enum testing */
+	public BubleEnum buble;
+        property ENUM buble
+                (nick = "Buble",
+                 blurb = "Buble",
+                 enum_type = Buble:Enum,
+                 default_value = BUBLE_STANDARD,
+                 link, export);
+
+	/* testing types */
+	public int t1;
+	public long int t2;
+	public int long t3;
+	public int long const t4;
+	public const int long t5;
+	public const char * const t6;
+	public char const * const t7;
+	public enum _gob__enum_t const * const t8;
+	public union _gob__union_t t9;
+	public union _gob__union_t * const * const * t10;
+	public struct _gob__struct_t * const * const * t11;
+	public const struct _gob__struct_t * const * const * t13;
+	public const enum _gob__enum_t * const * const * t14;
+	public enum _gob__enum_t t15;
+	public gchar const t16;
+	public const gchar * const t17;
+	public const gchar t18;
+
+	/* testing method with no arguments */
+	public void method_with_no_arguments (void)
+	{
+		/* FOO */
+	}
+
+	/* testing calling the above method */
+	public void foo (self) {
+		self_method_with_no_arguments ();
+	}
+
+	/* this is to test custom get_type */
+	/*public GtkType
+	get_type (void)
+	{
+		static guint type = 0;
+
+		if ( ! type) {
+			static const GtkTypeInfo info = {
+				"GtkWeirdButton",
+				sizeof (GtkWeirdButton),
+				sizeof (GtkWeirdButtonClass),
+				(GtkClassInitFunc) gtk_weird_button_class_init,
+				(GtkObjectInitFunc) gtk_weird_button_init,
+				NULL,
+				NULL,
+				(GtkClassInitFunc) NULL
+			};
+
+			type = gtk_type_unique (gtk_button_get_type(), &info);
+		}
+
+		return type;
+	}*/
+
+
+	/* testing empty statements */
+	;
+	;
+	;
+}
+
+%{
+
+static void
+jjjj(void)
+{
+}
+
+void
+bubu(void)
+{
+	jjjj();
+}
+
+%}
