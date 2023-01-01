@@ -1,3 +1,26 @@
+Patch by:
+
+Dov Grobgeld <dov.grobgeld@gmail.com>
+2023-01-01 Sun
+
+Patch README
+---
+
+This unofficial patched version fixes of gob2 fixes a few deprecationss
+that cause Gob2 to generate warnings.
+
+The following warnings were fixed:
+
+- Removed the use of the "register" attribute.
+- Changed g_string_sprintfa() to g_string_append_printf()
+- Defined the macro GLIB_VERSION_MIN_REQUIRED GLIB_VERSION_2_50 to
+  prevent warnings about the use of _priv.
+- Bumped the version of gob to 2.0.21
+
+
+Original README below
+---
+
 GObject Builder (GOB-2)
 (George's Obfuscated Bits)
 

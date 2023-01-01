@@ -197,7 +197,7 @@ check_duplicate_named (Class *c, Node *node, const char *id, int line_no)
 		}
 		if (n == node ||
 		    line_no >= nline_no ||
-		    g_strcasecmp (nid, id) != 0)
+		    g_ascii_strncasecmp (nid, id, strlen(nid)) != 0)
 			continue;
 		error_printf (GOB_ERROR, nline_no,
 			      "named symbol (argument or signal) '%s' "
