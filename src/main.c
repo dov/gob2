@@ -2,6 +2,7 @@
  * Copyright (C) 1999,2000 the Free Software Foundation.
  * Copyright (C) 2000 Eazel, Inc.
  * Copyright (C) 2001-2011 George (Jiri) Lebl
+ * Copyright (C) 2023 Dov Grobgeld (fixed a few deprecations)
  *
  * Author: George (Jiri) Lebl
  *
@@ -3831,7 +3832,11 @@ print_useful_macros(void)
 	sscanf (VERSION, "%d.%d.%d", &major, &minor, &pl);
 	out_printf (out, "#define GOB_VERSION_MAJOR %d\n", major);
 	out_printf (out, "#define GOB_VERSION_MINOR %d\n", minor);
-	out_printf (out, "#define GOB_VERSION_PATCHLEVEL %d\n\n", pl);
+	out_printf (out, "#define GOB_VERSION_PATCHLEVEL %d\n", pl);
+
+        // Get rid of warnings about _priv being deprecated
+        // See: https://gitlab.gnome.org/GNOME/glib/-/issues/2247
+	out_printf (out, "#define GLIB_VERSION_MIN_REQUIRED GLIB_VERSION_2_50\n\n");
 
 	/* Useful priv macro thingie */
 	/* FIXME: this should be done the same way that priv is, as a var,
