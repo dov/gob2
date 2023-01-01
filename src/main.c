@@ -891,9 +891,9 @@ add_signal_prots(Method *m)
 	if ( ! ret_none)
 		out_printf (out, "\t%s v_return;\n", retcast);
 
-	out_printf (out, "\tregister ___%s callback;\n"
-		    "\tregister GCClosure *cc = (GCClosure*) closure;\n"
-		    "\tregister gpointer data1, data2;\n\n",
+	out_printf (out, "\t ___%s callback;\n"
+		    "\t GCClosure *cc = (GCClosure*) closure;\n"
+		    "\t gpointer data1, data2;\n\n",
 		    s);
 
 	out_printf (out, "\tg_return_if_fail (n_param_values == %d);\n\n",
@@ -1317,7 +1317,7 @@ make_run_signal_flags(Method *m, gboolean last)
 				     "perhaps it was misspelled",
 				     flag);
 		}
-		g_string_sprintfa(gs, " | G_SIGNAL_%s", flag);
+		g_string_append_printf(gs, " | G_SIGNAL_%s", flag);
 	}
 
 	{
@@ -1541,7 +1541,7 @@ make_argument (Argument *a)
 			if(strcmp(argflags[i], flag)==0)
 				break;
 		}
-		g_string_sprintfa(flags, " | %s%s", argflags[i] ? "G_PARAM_" : "", flag);
+		g_string_append_printf(flags, " | %s%s", argflags[i] ? "G_PARAM_" : "", flag);
 	}
 
 	g_string_append (flags, ")");
@@ -1731,7 +1731,7 @@ make_property (Property *p)
 				if(strcmp(argflags[i], flag)==0)
 					break;
 			}
-			g_string_sprintfa(flags, " | %s%s", argflags[i] ? "G_PARAM_" : "", flag);
+			g_string_append_printf(flags, " | %s%s", argflags[i] ? "G_PARAM_" : "", flag);
 		}
 
 		g_string_append (flags, ")");
@@ -2946,7 +2946,7 @@ get_arg_names_for_macro (Method *m)
 	sep = "";
 	for(li=m->args;li;li=g_list_next(li)) {
 		FuncArg *arg = li->data;
-		g_string_sprintfa (gs, "%s___%s", sep, arg->name);
+		g_string_append_printf (gs, "%s___%s", sep, arg->name);
 		sep = ",";
 	}
 	return g_string_free (gs, FALSE);
