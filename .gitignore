@@ -13,3 +13,5 @@ gtk-im*
 /doc/gob2.1
 /stamp-h1
 config.*
+/src/lexer.c
+/src/parse.[ch]

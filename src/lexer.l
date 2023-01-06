@@ -605,7 +605,7 @@ flags		{ return FLAGS; }
 			yylval.id = g_strdup(yytext);
 			return TYPETOKEN;
 		}
-<CLASS_CODE,CLASS_CODE_I,PROPERTY_CODE,PROPERTY_CODE_I,INITIAL>[A-Za-z_][A-Za-z0-9_]*	{
+  <CLASS_CODE,CLASS_CODE_I,PROPERTY_CODE,PROPERTY_CODE_I,INITIAL>([A-Za-z0-9_]*::)?[A-Za-z_][A-Za-z0-9_]*(<[A-Za-z0-9<>,:]*>)?	{
 			yylval.id = g_strdup(yytext);
 			return TOKEN;
 		}

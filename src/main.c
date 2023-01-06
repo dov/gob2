@@ -2349,6 +2349,8 @@ add_finalize (Class *c)
 		if (destructors > 0) {
 			print_destructors (c);
 		}
+    if (for_cpp) 
+      out_printf (out, "\t delete self->_priv;\n");
 
 		out_printf(out,
 			   "\tif(G_OBJECT_CLASS(parent_class)->finalize) \\\n"
@@ -2418,12 +2420,18 @@ add_inits(Class *c)
 				   "#define __GOB_FUNCTION__ \"%s::init\"\n",
 				   c->otype);
 			if (privates > 0) {
-				out_printf(out, "\t%s->_priv = "
-						"G_TYPE_INSTANCE_GET_PRIVATE(%s,%s,%sPrivate);\n",
-						((FuncArg *)m->args->data)->name,
-						((FuncArg *)m->args->data)->name,
-						macrotype,
-						typebase);
+        if (for_cpp) {
+  				out_printf(out, "\t%s->_priv = new %sPrivate;\n",
+                     ((FuncArg *)m->args->data)->name,
+                     typebase);
+        }
+        else
+  				out_printf(out, "\t%s->_priv = "
+  						"G_TYPE_INSTANCE_GET_PRIVATE(%s,%s,%sPrivate);\n",
+  						((FuncArg *)m->args->data)->name,
+  						((FuncArg *)m->args->data)->name,
+  						macrotype,
+  						typebase);
 			} else if(always_private_struct) {
 				out_printf(out, "\t%s->_priv = NULL;\n",
 					   ((FuncArg *)m->args->data)->name);
@@ -2488,7 +2496,7 @@ add_inits(Class *c)
 					       ((FuncArg *)m->args->data)->name,
 					       did_base_obj);
 
-			if (privates > 0)
+			if (privates > 0 && !for_cpp)
 				out_printf (out,
 					    "\n\tg_type_class_add_private(%s,sizeof(%sPrivate));\n",
 					    ((FuncArg *)m->args->data)->name,
