@@ -415,7 +415,7 @@ export_accessors (const char *var_name,
 					"pointer", "*",
 					NULL);
 
-		g_string_sprintf (get_cbuf,
+		g_string_printf (get_cbuf,
 				  "\t%s%s val; "
 				  "g_object_get (G_OBJECT (self), \"%s\", "
 				  "&val, NULL); "
@@ -450,7 +450,7 @@ export_accessors (const char *var_name,
 					"pointer", "*",
 					NULL);
 
-		g_string_sprintf (set_cbuf,
+		g_string_printf (set_cbuf,
 				  "\tg_object_set (G_OBJECT (self), "
 				  "\"%s\", val, NULL);\n",
 				  var_name);
@@ -613,9 +613,9 @@ property_link_and_export (Node *node)
 			const char *setcast = "";
 			char *to_free = NULL;
 			set_func = g_strdup_printf ("g_value_set_%s", prop->gtktype);
-			g_strdown (set_func);
+			g_ascii_strdown (set_func, -1);
 			get_func = g_strdup_printf ("g_value_get_%s", prop->gtktype);
-			g_strdown (get_func);
+			g_ascii_strdown (get_func, -1);
 
 			if (for_cpp) {
 				if (strcmp (prop->gtktype, "FLAGS") == 0) {
