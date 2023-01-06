@@ -1,0 +1,15 @@
+/.sconsign.dblite
+/Makefile
+/SConstruct
+/autom4te.cache/
+/compile
+*.o
+src/.deps
+*/Makefile
+*~
+giv-*
+gtk-im*
+/src/gob2
+/doc/gob2.1
+/stamp-h1
+config.*
