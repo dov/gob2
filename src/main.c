@@ -130,10 +130,12 @@ gint prealloc = 0;
 gboolean use_m4 = FALSE; /* preprocess sources with m4 */
 gboolean use_m4_clean = FALSE; /* preprocess sources with m4, no m4 flags */
 char *m4_commandline = NULL;
+#if 0
 #define M4_INCLUDE_DIR  PKGDATADIR "/m4"
 #define M4_BASE_FILENAME "gobm4.m4"
 #define M4_FLAGS "-P -s -I" M4_INCLUDE_DIR  " -DGOBM4_GOB_VERSION=" VERSION " " M4_BASE_FILENAME
 #define M4_COMMANDLINE "m4"
+#endif
 
 int method_unique_id = 1;
 
@@ -4293,12 +4295,14 @@ print_help(void)
 		"\t--always-private-struct Always create a private pointer "
 					  "in\n"
 		"\t                        the object structure\n"
+#if 0
 		"\t--m4                    Preprocess source with m4. "
 					  "Following args will\n"
 		"\t                        be passed to m4\n"
 		"\t--m4-dir                Print directory that will be "
 					  "searched for m4\n"
 		"\t                        files\n"
+#endif
 		"\t--no-write,-n           Don't write output files, just "
 					  "check syntax\n"
 		"\t--no-lines              Don't print '#line' to output\n"
@@ -4320,11 +4324,14 @@ parse_options(int argc, char *argv[])
 	int i;
 	int got_file = FALSE;
 	int no_opts = FALSE;
+#if 0
 	int m4_opts = FALSE; /* if we are just passing on args to m4 */
+#endif
 
 	filename = NULL;
 
 	for(i = 1 ; i < argc; i++) {
+#if 0
 		if(m4_opts) {
 			char *new_commandline;
 			g_assert(m4_commandline!=NULL);
@@ -4356,7 +4363,10 @@ parse_options(int argc, char *argv[])
 			g_free(m4_commandline);
 			m4_commandline=new_commandline;
 
-		} else if(no_opts ||
+		}
+    else
+#endif
+    if(no_opts ||
 		   argv[i][0] != '-') {
 			/*must be a file*/
 			if(got_file) {
@@ -4403,7 +4413,9 @@ parse_options(int argc, char *argv[])
 			/* no op */;
 		} else if(strcmp(argv[i], "--always-private-struct")==0) {
 			always_private_struct = TRUE;
-		} else if(strcmp(argv[i], "--m4-dir")==0) {
+		}
+#if 0
+    else if(strcmp(argv[i], "--m4-dir")==0) {
 			printf("%s\n",M4_INCLUDE_DIR);
 			exit(0);
 		} else if(strcmp(argv[i], "--m4")==0) {
@@ -4416,7 +4428,9 @@ parse_options(int argc, char *argv[])
 			use_m4_clean=TRUE;
 			m4_opts = TRUE;
 			m4_commandline=g_strdup(M4_COMMANDLINE);
-		} else if (strcmp (argv[i], "-o") == 0 || 
+		}
+#endif
+    else if (strcmp (argv[i], "-o") == 0 || 
 			   strcmp (argv[i], "--output-dir") == 0) {
 			if (i+1 < argc) {
 				output_dir = g_strdup (argv[i+1]);
