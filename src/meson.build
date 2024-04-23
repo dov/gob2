@@ -15,11 +15,11 @@ pfiles = pgen.process('parse.y')
 lfiles = lgen.process('lexer.l')
 
 src = [
-'checks.c',
-'main.c',
-'out.c',
-'treefuncs.c',
-'util.c',
+  'checks.c',
+  'main.c',
+  'out.c',
+  'treefuncs.c',
+  'util.c',
 ]
 
 glib_dep = dependency('glib-2.0')
@@ -30,4 +30,5 @@ gob2_exe = executable('gob2',
                       lfiles,
                       include_directories: '..',
                       dependencies: [glib_dep],
+                      install: not meson.is_subproject()
                      )
