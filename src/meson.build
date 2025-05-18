@@ -30,5 +30,6 @@ gob2_exe = executable('gob2',
                       lfiles,
                       include_directories: '..',
                       dependencies: [glib_dep],
-                      install: not meson.is_subproject()
+                      install: not meson.is_subproject(),
+                      native : true
                      )
