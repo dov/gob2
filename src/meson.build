@@ -31,5 +31,12 @@ gob2_exe = executable('gob2',
                       include_directories: '..',
                       dependencies: [glib_dep],
                       install: not meson.is_subproject(),
-                      native : true
+                      native : true,
+                      c_args : [
+                        '-Wno-deprecated-declarations',
+                        '-Wno-unused-result',
+                        '-Wno-unused-function',
+                        '-Wno-array-bounds',
+                      ],
+
                      )
